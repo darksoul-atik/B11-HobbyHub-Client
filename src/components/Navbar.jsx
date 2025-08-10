@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router";
 import hobbyhub from "../assets/hobbyhub.png";
+import GradientShadowButton from "../utils/GradientShadowButton";
+import DarkModeToggle from "../utils/DarkModeToggle";
 
 const Navbar = () => {
   const links = (
@@ -21,8 +23,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
-      
+    <div className="navbar dark:bg-white lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
       <div className="navbar-start flex items-center gap-3">
         {/* Mobile dropdown menu button */}
         <div className="dropdown">
@@ -46,7 +47,6 @@ const Navbar = () => {
               />
             </svg>
           </div>
-
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[100] p-2 shadow-lg bg-base-100 rounded-box w-52"
@@ -60,27 +60,17 @@ const Navbar = () => {
           to="/"
           className="text-2xl font-bold tracking-tight px-2 no-underline hover:no-underline select-none"
         >
-
-
-          {/* <span className="roboto-bold text-cpurple transition-transform duration-200 hover:scale-105">
-            Hobby
-          </span>
-          <span className="roboto-bold text-cpink transition-transform duration-200 hover:scale-105">
-            HUB
-          </span> */}
-
           <img className="w-25" src={hobbyhub} alt="hobbyhub" />
-
-
         </NavLink>
       </div>
 
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+
       <div className="navbar-end">
+        <DarkModeToggle></DarkModeToggle>
         <a className="btn">Profile</a>
-        <a className="btn">DarkMode</a>
         <a className="btn">LogOut</a>
       </div>
     </div>
