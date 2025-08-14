@@ -10,7 +10,7 @@ const AnimatedGradientText = ({ children, className = "" }) => {
     config: {
       duration: 6000,
       easing: easings.linear,
-    }, 
+    },
   });
 
   return (

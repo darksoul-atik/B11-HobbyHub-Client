@@ -29,13 +29,13 @@ const Hero = () => {
   return (
     // Hero Container
     <div
-      className=" lg:mt-10 lg:max-w-5/6 mx-auto flex lg:flex-row max-sm:flex-col  lg:justify-around
+      className=" lg:ml-20  lg:mx-auto lg:mt-10 lg:w-full mx-auto flex lg:flex-row max-sm:flex-col gap-10  lg:justify-around
     "
     >
       {/* Image Slide Container */}
-      <div className="lg:w-3/6">
+      <div className=" lg:w-3/6">
         {/* SwiperJs Div Container */}
-        <div className="backdrop-blur-lg rounded-xl shadow-xl">
+        <div className="backdrop-blur-lg rounded-2xl shadow-xl">
           {/* SwiperJs Slide */}
           <Swiper
             effect="coverflow"
@@ -67,9 +67,9 @@ const Hero = () => {
               "https://i.postimg.cc/265Fmyk3/Green-and-Black-Quote-Facebook-Post.png",
             ].map((src, index) => (
               <SwiperSlide key={index}>
-                <div className="p-1 rounded-2xl">
+                <div className=" rounded-2xl">
                   <img
-                    className="rounded-2xl shadow-lg transition-transform duration-500 hover:scale-105"
+                    className="rounded-2xl w-full h-full shadow-lg transition-transform duration-500 hover:scale-105"
                     src={src}
                     alt={`Slide ${index + 1}`}
                   />
@@ -79,14 +79,14 @@ const Hero = () => {
           </Swiper>
         </div>
       </div>
-
+  
       {/* Text Content Container */}
-      <div className=" lg:pl-10 lg:flex-2 lg:pt-10    ">
+      <div className="  lg:pl-10 lg:flex-2 lg:pt-10    ">
         <AnimatedGradientText className="lg:text-7xl">
           Your Hobby. <br /> Your Community.
         </AnimatedGradientText>
 
-        <p className="text-white  text-lg lg:mt-10  max-w-xl">
+        <p className="text-white roboto-medium dark:text-lcyan  text-lg lg:mt-10  max-w-xl">
           Whatever sparks your curiosity .It maybe coding, cooking, sketching,
           or strategy games! <br />
           <span className="text-cpink font-bold">hobbyHUB</span> is where that
@@ -96,7 +96,7 @@ const Hero = () => {
         </p>
 
         <div className="w-full flex flex-wrap lg:mt-10 gap-3 items-center rounded-lg px-4 py-2 bg-opacity-10">
-          <FaQuoteLeft className="text-white text-2xl" />
+          <FaQuoteLeft className="text-white dark:text-lcyan  text-2xl" />
 
           <span className="text-cpurple font-semibold text-lg">
             My hobby is
@@ -107,23 +107,23 @@ const Hero = () => {
             <Cursor cursorColor="#e34e98" />
           </span>
 
-          <FaQuoteRight className="text-white text-2xl" />
+          <FaQuoteRight className="text-white dark:text-lcyan  text-2xl" />
         </div>
 
         {/* Hero Bottom Section */}
 
-        <p className="text-white text-left lg:text-xl lg:mt-20  font-bold">
+        <p className="text-white roboto-bold dark:text-lcyan  text-left lg:text-xl lg:mt-20  font-bold">
           Create your group today!
         </p>
 
         {/* Hero Button Area */}
         <div className="lg:mt-5 space-x-5 flex flex-wrap">
-          <GradientShadowButton className="text-sm inline-flex items-center gap-2">
+          <GradientShadowButton className="px-3 py-2 text-sm inline-flex items-center gap-2">
             <FaUsers className="text-base" />
             Create an Instant Group
           </GradientShadowButton>
 
-          <GradientShadowButton className="text-sm inline-flex items-center gap-2">
+          <GradientShadowButton className="px-3 py-2 text-sm inline-flex items-center gap-2">
             <FaSearch className="text-base" />
             Search Ideas!
           </GradientShadowButton>

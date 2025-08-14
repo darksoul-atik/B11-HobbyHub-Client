@@ -5,8 +5,9 @@ import Hero from "./Hero";
 
 const Headers = () => {
   return <div >
-    <Navbar></Navbar>
-    <Hero></Hero>
+   <Navbar></Navbar>
+    {/* Group Section */}
+  
   </div>;
 };
 

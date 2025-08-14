@@ -23,7 +23,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar dark:bg-white lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
+    <div className="navbar dark:bg-lwhite dark:text-lcyan lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
       <div className="navbar-start flex items-center gap-3">
         {/* Mobile dropdown menu button */}
         <div className="dropdown">
@@ -71,7 +71,8 @@ const Navbar = () => {
       <div className="navbar-end">
         <DarkModeToggle></DarkModeToggle>
         <a className="btn">Profile</a>
-        <a className="btn">LogOut</a>
+        <GradientShadowButton className=" px-2 text-sm py-2 scale-90">LogOut</GradientShadowButton>
+   
       </div>
     </div>
   );

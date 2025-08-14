@@ -5,7 +5,7 @@
 
 @layer base {
   * {
-    @apply transition-colors duration-400;
+    @apply transition-colors  duration-200;
   }
 }
 
@@ -106,4 +106,10 @@
   --color-cpurple: #4640a8;     /* rich purple */
   --color-cpink: #e34e98;      /* vivid pink */
   --color-ccyan: #2b455e;      /* slate cyan */
+  
+ 
+  --color-lwhite:  #f7f5f4; /* light surface/background */
+  --color-lpurple: #5f59d6; /* primary tint */
+  --color-lpink:   #f06aa8; /* accent tint */
+  --color-lcyan:   #5b7893; /* slate-cyan tint */
 }
