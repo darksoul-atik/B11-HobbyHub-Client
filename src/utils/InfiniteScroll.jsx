@@ -52,7 +52,7 @@ export default function InfiniteScroll({
 
     const observer = Observer.create({
       target: container,
-      type: "wheel,touch,pointer",
+      type: "touch,pointer",
       preventDefault: true,
       onPress: ({ target }) => {
         target.style.cursor = "grabbing";
