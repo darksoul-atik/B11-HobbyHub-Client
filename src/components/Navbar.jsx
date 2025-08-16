@@ -23,10 +23,10 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar dark:bg-lwhite dark:text-lcyan lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
-      <div className="navbar-start flex items-center gap-3">
+    <div className="navbar dark:bg-lwhite dark:text-lcyan flex  items-center lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
+      <div className="navbar-start flex items-center  gap-3">
         {/* Mobile dropdown menu button */}
-        <div className="dropdown">
+        <div className="dropdown ">
           <div
             tabIndex={0}
             role="button"
@@ -60,7 +60,7 @@ const Navbar = () => {
           to="/"
           className="text-2xl font-bold tracking-tight px-2 no-underline hover:no-underline select-none"
         >
-          <img className="w-25" src={hobbyhub} alt="hobbyhub" />
+          <img className="w-25 max-sm:w-15" src={hobbyhub} alt="hobbyhub" />
         </NavLink>
       </div>
 
@@ -70,8 +70,9 @@ const Navbar = () => {
 
       <div className="navbar-end">
         <DarkModeToggle></DarkModeToggle>
-        <a className="btn">Profile</a>
-        <GradientShadowButton className=" px-2 text-sm py-2 scale-90">LogOut</GradientShadowButton>
+      
+        <GradientShadowButton className=" max-sm:btn-xs  max-sm:text-xs max-sm:px-2 px-2 text-sm py-2 scale-90">Profile</GradientShadowButton>
+        <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">LogOut</GradientShadowButton>
    
       </div>
     </div>
