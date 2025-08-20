@@ -29,7 +29,7 @@ const Hero = () => {
   return (
     // Hero Container
     <div
-      className=" lg:ml-20  lg:mx-auto lg:mt-10 lg:w-full mx-auto flex lg:flex-row max-sm:flex-col gap-10  lg:justify-around 
+      className=" lg:ml-20 md:flex-col  lg:mx-auto lg:mt-10 lg:w-full mx-auto flex lg:flex-row max-sm:flex-col gap-10  lg:justify-around 
     "
     >
       {/* Image Slide Container */}
@@ -82,15 +82,15 @@ const Hero = () => {
 
       {/* Text Content Container */}
 
-      <div className=" lg:flex-col lg:pl-10 lg:flex-2 lg:pt-10 flex max-sm:flex-col max-sm:justify-center max-sm:items-center ">
-        <AnimatedGradientText className="lg:text-7xl max-sm:text-3xl max-sm:text-center max-sm:mb-10 ">
+      <div className=" md:flex-col  lg:flex-col lg:pl-10 lg:flex-2 lg:pt-10 flex max-sm:flex-col max-sm:justify-center max-sm:items-center ">
+        <AnimatedGradientText className="md:mb-10 md:text-4xl md:text-center lg:text-left lg:text-7xl max-sm:text-3xl max-sm:text-center max-sm:mb-10 ">
           Your Hobby. <br /> Your Community. <br />
-          <span className="max-sm:flex max-sm:justify-center lg:hidden md:hidden">
+          <span className="max-sm:flex max-sm:justify-center lg:hidden ">
             Your Place.
           </span>
         </AnimatedGradientText>
 
-        <p className="text-white roboto-medium dark:text-lcyan  text-lg lg:mt-10 max-w-xl max-sm:text-sm max-sm:text-center m ">
+        <p className="md:text-base md:mx-auto lg:mx-0 text-white roboto-regular  dark:text-lcyan  text-lg lg:mt-10 max-w-xl max-sm:text-sm max-sm:text-center">
           Whatever sparks your curiosity .It maybe coding, cooking, sketching,
           or strategy games! <br />
           <span className="text-cpink font-bold">hobbyHUB</span> is where that
@@ -99,31 +99,31 @@ const Hero = () => {
           you do it together.
         </p>
 
-        <div className="w-full max-sm:hidden flex flex-wrap lg:mt-10 gap-3 items-center rounded-lg px-4 py-2 bg-opacity-10 max-sm:mt-5 max-sm:justify-center ">
-          <FaQuoteLeft className="max-sm:hidden text-white dark:text-lcyan  text-2xl" />
+        <div className="md:mx-auto lg:mx-0 md:justify-center lg:justify-start md:mt-5 w-full max-sm:hidden flex flex-wrap lg:mt-10 gap-3 items-center rounded-lg px-4 py-2 bg-opacity-10 max-sm:mt-5 max-sm:justify-center ">
+          <FaQuoteLeft className="md:text-sm max-sm:hidden text-white dark:text-lcyan  text-2xl" />
 
           <div></div>
-          <span className=" text-cpurple max-sm:text-xs font-semibold text-lg">
+          <span className="md:text-sm text-cpurple max-sm:text-xs font-semibold text-lg">
             My hobby is
           </span>
 
-          <span className="max-sm:text-sm text-cpink text-3xl lg:text-4xl font-bold">
+          <span className="md:text-xl max-sm:text-sm text-cpink text-3xl lg:text-4xl font-bold">
             {text}
             <Cursor cursorColor="#e34e98" />
           </span>
 
-          <FaQuoteRight className="max-sm:hidden text-white dark:text-lcyan  text-2xl" />
+          <FaQuoteRight className=" md:text-sm max-sm:hidden text-white dark:text-lcyan  text-2xl" />
         </div>
 
         {/* Hero Bottom Section */}
 
-        <p className="text-white max-sm:mt-10 roboto-bold dark:text-lcyan  text-left lg:text-xl lg:mt-20  font-bold">
+        <p className="md:text-center md:mt-10 md:text-base lg:text-left text-white max-sm:mt-10 roboto-bold dark:text-lcyan  text-left lg:text-xl lg:mt-20  font-bold">
           Create your group today!
         </p>
 
         {/* Hero Button Area */}
 
-        <div className="mt-3 md:mt-4 lg:mt-5 flex flex-col md:flex-row flex-wrap items-stretch md:items-center space-y-3 md:space-y-0 md:space-x-4 lg:space-x-5 max-sm:flex max-sm:w-4/6">
+        <div className="md:justify-center lg:justify-start mt-3 md:mt-4 lg:mt-5 flex flex-col md:flex-row flex-wrap items-stretch md:items-center space-y-3 md:space-y-0 md:space-x-4 lg:space-x-5 max-sm:flex max-sm:w-4/6">
 
           <GradientShadowButton className="w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2 
           max-sm:text-xs max-sm:px-2 

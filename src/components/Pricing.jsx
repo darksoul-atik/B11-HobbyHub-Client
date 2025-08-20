@@ -78,13 +78,13 @@ export default function ManyOffersVariant1() {
   }
 
   return (
-    <div className=" max-sm:mt-10  flex roboto-medium flex-col items-center gap-4">
+    <div className=" max-sm:mt-10 flex roboto-medium flex-col items-center gap-4">
       <SelectOfferTab
         handleSwitchTab={handleSwitchTab}
         selectedBilledType={selectedBilledType}
       />
 
-      <div className="grid  w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+      <div className="grid  w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-2">
         {pricingData.map((offer) => (
           <OfferCard
             key={offer.title}

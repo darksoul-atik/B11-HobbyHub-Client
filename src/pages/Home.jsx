@@ -16,7 +16,7 @@ const Home = () => {
 
       {/* Title and Review Section */}
       <section className="lg:m-20">
-        <div className="w-full lg:mb-20 text-center">
+        <div className="md:mt-10 w-full lg:mb-20 text-center">
           <AnimatedGradientText>
             <h1 className="text-4xl max-sm:mt-10 max-sm:text-3xl ">
               Real Feedback from Real Users
@@ -33,10 +33,10 @@ const Home = () => {
         
         <div>
           {/* Double styled reviews for both Large and Small devices */}
-          <div className="max-sm:hidden">
+          <div className="hidden lg:block">
             <Reviews></Reviews>
           </div>
-          <div className="min-lg:hidden max-sm:mt-5 max-sm:mb-15">
+          <div className="min-lg:hidden max-sm:mt-5 md:mt-5 max-sm:mb-15">
             <MobileViewReview></MobileViewReview>
           </div>
         </div>
@@ -44,12 +44,12 @@ const Home = () => {
 
       {/* Price and Membership Section */}
       <section className="lg:m-20 max-sm:mb-15">
-        <div className="w-full lg:mb-10 text-center">
+        <div className="w-full md:mt-10 md:mb-5 lg:mb-5 text-center">
           <AnimatedGradientText>
             <h1 className="text-4xl ">Subscribe to our Premium Membership</h1>
           </AnimatedGradientText>
         </div>
-        <div>
+        <div className="">
           <Pricing></Pricing>
         </div>
       </section>
