@@ -11,7 +11,11 @@ const Home = () => {
     <div>
       {/* Hero Section */}
       <section>
+     
+
         <Hero></Hero>
+    
+
       </section>
 
       {/* Title and Review Section */}
@@ -30,7 +34,6 @@ const Home = () => {
           </p>
         </div>
 
-        
         <div>
           {/* Double styled reviews for both Large and Small devices */}
           <div className="hidden lg:block">
@@ -53,7 +56,6 @@ const Home = () => {
           <Pricing></Pricing>
         </div>
       </section>
-
     </div>
   );
 };
