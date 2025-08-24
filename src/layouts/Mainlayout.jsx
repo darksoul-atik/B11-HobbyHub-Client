@@ -6,7 +6,7 @@ import "../App.css";
 
 const Mainlayout = () => {
   return (
-    <div className="bg-cblack dark:bg-lwhite dark:text-lcyan  ">
+    <div className="bg-cblack  dark:bg-lwhite dark:text-lcyan  ">
       <Headers />
 
       <div className="min-h-[calc(100vh-116px)] hide-scrollbar overflow-auto">

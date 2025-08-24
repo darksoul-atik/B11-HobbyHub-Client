@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import hobbyhub from "../assets/hobbyhub.png";
 import GradientShadowButton from "../utils/GradientShadowButton";
 import DarkModeToggle from "../utils/DarkModeToggle";
@@ -23,7 +23,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar dark:bg-lwhite dark:text-lcyan flex  items-center lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
+    <div className="navbar  dark:bg-lwhite dark:text-lcyan flex  items-center lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
       <div className="navbar-start flex items-center  gap-3">
         {/* Mobile dropdown menu button */}
         <div className="dropdown ">
@@ -70,10 +70,16 @@ const Navbar = () => {
 
       <div className="navbar-end">
         <DarkModeToggle></DarkModeToggle>
-      
-        <GradientShadowButton className=" max-sm:btn-xs  max-sm:text-xs max-sm:px-2 px-2 text-sm py-2 scale-90">Profile</GradientShadowButton>
-        <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">LogOut</GradientShadowButton>
-   
+
+        <GradientShadowButton className=" max-sm:btn-xs  max-sm:text-xs max-sm:px-2 px-2 text-sm py-2 scale-90">
+          Profile
+        </GradientShadowButton>
+
+        <Link to="/login">
+          <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
+            Login
+          </GradientShadowButton>
+        </Link>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import DarkModeToggle from "../utils/DarkModeToggle";
 import AnimatedGradientText from "../utils/AnimatedGradientText";
 import GradientShadowButton from "../utils/GradientShadowButton";
+import { AiTwotoneHome } from "react-icons/ai";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -124,8 +125,17 @@ const Login = () => {
           </div>
         </form>
 
-        {/* Dark Mode Toggle */}
-        <DarkModeToggle />
+        {/* Dark Mode Toggle and Home  */}
+        <div className="flex gap-5">
+          
+          <Link to="/">
+          <GradientShadowButton className="scale-75 px-3 py-2 flex" >
+            <AiTwotoneHome size={20} />
+          </GradientShadowButton>
+          </Link>
+
+          <DarkModeToggle />
+        </div>
       </div>
 
       {/* Right Glass Card: HobbyHub content */}

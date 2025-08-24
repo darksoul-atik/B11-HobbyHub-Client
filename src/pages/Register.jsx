@@ -10,14 +10,12 @@ import "swiper/css/autoplay";
 import { Link, useNavigate } from "react-router";
 import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-
-import { Toaster } from "react-hot-toast";
 import { ToastContext } from "../contexts/ToastContext";
-
+import { AiTwotoneHome } from "react-icons/ai";
 
 const Register = () => {
-  const { createUser, updateUser, setUser  } = useContext(AuthContext);
-  const {showToast} = useContext(ToastContext);
+  const { createUser, updateUser, setUser } = useContext(AuthContext);
+  const { showToast } = useContext(ToastContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -52,32 +50,25 @@ const Register = () => {
           const user = result.user;
           updateUser({ displayName: name, photoURL: photoURL }).then(() => {
             setUser({ ...user, displayName: name, photoURL: photoURL });
-            console.log(user);
             navigate("/");
-            showToast("Successfully Registered","success")
-
-          
-
-
+            showToast("Successfully Registered", "success");
           });
-
-
-
         })
-
         .catch((error) => {
-          console.log("Something Wrong", error);
           if (error.message == "Firebase: Error (auth/email-already-in-use).") {
-            alert(
-              "Error while registering or Email has already registered. Try another Mail"
+            showToast(
+              `This email is already registered.
+               Please try a different one.`,
+              "error"
             );
+          } else {
+            showToast("Error while completing task.Try Again Later", "error");
           }
         });
     }
   };
   return (
     <div className="h-screen roboto-regular w-screen dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] flex flex-col lg:flex-row items-center justify-center bg-cover bg-center gap-4 p-4">
-    
       {/* Left Glass Card: HobbyHub content  */}
       <div className="relative  hidden lg:flex hover:bg-white/5 w-full lg:w-2/6 h-4/6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tr-none lg:rounded-br-none shadow-2xl flex-col justify-between p-8 overflow-hidden">
         {/* Gradient accents */}
@@ -315,8 +306,19 @@ const Register = () => {
           </div>
         </form>
 
-        {/* Dark Mode Toggle */}
-        <DarkModeToggle />
+        {/* Dark Mode Toggle and Home Button */}
+        <div className="flex gap-5">
+
+          {/* Home Button */}
+          <Link to="/">
+            <GradientShadowButton className="scale-75 px-3 py-2 flex">
+              <AiTwotoneHome size={20} />
+            </GradientShadowButton>
+          </Link>
+           
+           {/* Darkmode toggle Button */}
+          <DarkModeToggle />
+        </div>
       </div>
     </div>
   );

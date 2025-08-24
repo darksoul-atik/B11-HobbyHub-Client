@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import Hero from "./Hero";
 
 const Headers = () => {
-  return <div >
+  return <div className="" >
    <Navbar></Navbar>
     {/* Group Section */}
   
