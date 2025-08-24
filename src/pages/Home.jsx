@@ -10,21 +10,17 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section>
-     
-
+      <section className="max-sm:mb-10">
         <Hero></Hero>
-    
-
       </section>
 
       {/* Title and Review Section */}
       <section className="lg:m-20">
         <div className="md:mt-10 w-full lg:mb-20 text-center">
           <AnimatedGradientText>
-            <h1 className="text-4xl max-sm:mt-10 max-sm:text-3xl ">
+            <span className="text-4xl  max-sm:mt-10 max-sm:text-3xl ">
               Real Feedback from Real Users
-            </h1>
+            </span>
           </AnimatedGradientText>
           <p className="text-white dark:text-ccyan roboto-regular text-sm md:text-base  max-w-xl mx-auto mt-5">
             We take pride in cultivating a space where hobbies become shared
@@ -49,7 +45,9 @@ const Home = () => {
       <section className="lg:m-20 max-sm:mb-15">
         <div className="w-full md:mt-10 md:mb-5 lg:mb-5 text-center">
           <AnimatedGradientText>
-            <h1 className="text-4xl ">Subscribe to our Premium Membership</h1>
+            <span className="text-4xl ">
+              Subscribe to our Premium Membership
+            </span>
           </AnimatedGradientText>
         </div>
         <div className="">

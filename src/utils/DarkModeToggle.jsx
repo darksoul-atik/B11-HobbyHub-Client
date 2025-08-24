@@ -5,9 +5,6 @@ import { ThemeContext } from "../Contexts/ThemeContext";
 const DarkModeToggle = () => {
   const {darkMode, setDarkMode} = use(ThemeContext)
 
-  console.log(darkMode);
-  
-
   return (
     <GradientShadowButton className="scale-75 px-3 py-2 flex">
 

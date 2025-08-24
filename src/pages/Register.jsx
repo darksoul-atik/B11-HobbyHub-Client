@@ -7,25 +7,30 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import { Link } from "react-router";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import { useContext, useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+
+import { Toaster } from "react-hot-toast";
+import { ToastContext } from "../contexts/ToastContext";
+
 
 const Register = () => {
+  const { createUser, updateUser, setUser  } = useContext(AuthContext);
+  const {showToast} = useContext(ToastContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleRegisterForm = (e) => {
     e.preventDefault();
     const registerForm = e.target;
     const registerFormData = new FormData(registerForm);
     const registeredUserForm = Object.fromEntries(registerFormData.entries());
-    console.log(registeredUserForm);
 
     const name = registeredUserForm.name;
     const email = registeredUserForm.email;
     const photoURL = registeredUserForm.photourl;
     const password = registeredUserForm.password;
-
-    console.log(name, email, photoURL, password);
 
     if (password.length < 6) {
       setError("Password should be at least 6 characters long");
@@ -42,10 +47,37 @@ const Register = () => {
       return;
     } else {
       setError("");
+      createUser(email, password)
+        .then((result) => {
+          const user = result.user;
+          updateUser({ displayName: name, photoURL: photoURL }).then(() => {
+            setUser({ ...user, displayName: name, photoURL: photoURL });
+            console.log(user);
+            navigate("/");
+            showToast("Successfully Registered","success")
+
+          
+
+
+          });
+
+
+
+        })
+
+        .catch((error) => {
+          console.log("Something Wrong", error);
+          if (error.message == "Firebase: Error (auth/email-already-in-use).") {
+            alert(
+              "Error while registering or Email has already registered. Try another Mail"
+            );
+          }
+        });
     }
   };
   return (
     <div className="h-screen roboto-regular w-screen dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] flex flex-col lg:flex-row items-center justify-center bg-cover bg-center gap-4 p-4">
+    
       {/* Left Glass Card: HobbyHub content  */}
       <div className="relative  hidden lg:flex hover:bg-white/5 w-full lg:w-2/6 h-4/6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tr-none lg:rounded-br-none shadow-2xl flex-col justify-between p-8 overflow-hidden">
         {/* Gradient accents */}
@@ -150,22 +182,34 @@ const Register = () => {
         <div className="mt-4">
           <Swiper
             modules={[Autoplay]}
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
-            loop
+            autoplay={{
+              delay: 2000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
             speed={700}
             slidesPerView={1}
+            loop
+            allowTouchMove
             className="w-full h-24"
           >
             {[
-              "“Found my hiking crew within a week — the events are so well organized.” — Sarah",
-              "“As a host, RSVPs and reminders made everything effortless.” — Daniel",
-              "“Great mix of online and in-person meetups. Highly recommend.” — Ayesha",
+              "“Joined my first event and already made three new friends!” — Priya",
+              "“The app made hosting stress-free — everything just worked.” — James",
+              "“Loved how inclusive and welcoming the community felt.” — Elena",
+              "“Reminders saved me from missing out on so many great meetups.” — Marco",
+              "“Perfect balance of casual hangouts and professional networking.” — Fatima",
+              "“I was nervous at first, but the group made me feel right at home.” — Kevin",
+              "“Easy to RSVP, easy to show up — can't ask for more.” — Sofia",
+              "“Discovered a new hobby and a group of amazing people.” — Tom",
+              "“Both online and in-person events fit perfectly with my schedule.” — Mei",
+              "“From strangers to friends in just one evening — unforgettable.” — Arjun",
             ].map((text, i) => (
               <SwiperSlide
                 key={i}
-                className="flex items-center justify-center text-center text-white text-sm font-medium"
+                className="!h-full flex items-center justify-center"
               >
-                <div className="px-6 py-4 bg-white/10  border-white/10">
+                <div className="px-6 py-4  bg-white/10  text-white text-center text-sm font-medium">
                   {text}
                 </div>
               </SwiperSlide>
@@ -184,7 +228,6 @@ const Register = () => {
           </p>
         </div>
       </div>
-
       {/* Right Glass Card: Sign-up form  */}
       <div className="w-full h-4/6 md:w-4/6 lg:w-2/6 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tl-none lg:rounded-bl-none shadow-2xl flex flex-col items-center justify-center hover:bg-white/5 space-y-6 p-8">
         {/* Header */}
