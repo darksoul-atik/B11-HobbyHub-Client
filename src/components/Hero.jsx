@@ -29,7 +29,7 @@ const Hero = () => {
   return (
     // Hero Container
     <div
-      className=" lg:ml-20 md:flex-col  lg:mx-auto lg:mt-10 lg:w-full mx-auto flex lg:flex-row max-sm:flex-col gap-10  lg:justify-around 
+      className=" lg:ml-20 md:flex-col md:flex-wrap  lg:mx-auto lg:mt-10 lg:w-full mx-auto flex lg:flex-row max-sm:flex-col gap-10  lg:justify-around 
     "
     >
       {/* Image Slide Container */}

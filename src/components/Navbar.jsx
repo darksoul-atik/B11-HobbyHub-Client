@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import hobbyhub from "../assets/hobbyhub.png";
 import GradientShadowButton from "../utils/GradientShadowButton";
 import DarkModeToggle from "../utils/DarkModeToggle";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then((result) => {
+        console.log("log out successfull", result);
+      })
+      .catch((error) => {
+        console.log("error while logout", error);
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -18,6 +31,9 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to="/myGroups">My Groups</NavLink>
+      </li>
+      <li className="text-red-700">
+        <NavLink>{user?.displayName}</NavLink>
       </li>
     </>
   );
@@ -75,11 +91,19 @@ const Navbar = () => {
           Profile
         </GradientShadowButton>
 
-        <Link to="/login">
-          <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
-            Login
-          </GradientShadowButton>
-        </Link>
+        {user ? (
+          <Link onClick={handleLogout}>
+            <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
+              Log out
+            </GradientShadowButton>
+          </Link>
+        ) : (
+          <Link to="/login" >
+            <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
+              Log in
+            </GradientShadowButton>
+          </Link>
+        )}
       </div>
     </div>
   );
