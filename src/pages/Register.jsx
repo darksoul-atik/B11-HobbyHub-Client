@@ -296,7 +296,7 @@ const Register = () => {
           </div>
 
           {/* Submit */}
-          <GradientShadowButton className="py-2">Sign Up</GradientShadowButton>
+          <GradientShadowButton className="rounded-xl py-2">Sign Up</GradientShadowButton>
 
           {/* Helpers */}
           <div className="flex items-center justify-center text-xs text-white/80">
@@ -311,7 +311,7 @@ const Register = () => {
 
           {/* Home Button */}
           <Link to="/">
-            <GradientShadowButton className="scale-75 px-3 py-2 flex">
+            <GradientShadowButton className=" rounded-xl scale-75 px-3 py-2 flex">
               <AiTwotoneHome size={20} />
             </GradientShadowButton>
           </Link>

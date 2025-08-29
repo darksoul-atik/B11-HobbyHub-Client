@@ -4,7 +4,7 @@ import Forms from '../components/Forms';
 const CreateGroups = () => {
     return (
         <div>
-            <Forms></Forms>
+            This is Create Group page
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import DarkModeToggle from "../utils/DarkModeToggle";
 import AnimatedGradientText from "../utils/AnimatedGradientText";
 import GradientShadowButton from "../utils/GradientShadowButton";
@@ -14,11 +14,16 @@ import { AuthContext } from "../contexts/AuthContext";
 import { ToastContext } from "../contexts/ToastContext";
 
 const Login = () => {
-  const { googleLogin, setUser ,gitHubLogin } = useContext(AuthContext);
+  const { googleLogin, setUser, gitHubLogin, signIn } = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
-
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if(location.state){
+      showToast("You must login to access the page");
+    }
+  },[location,showToast])
 
   const handleGoogleLogin = () => {
     googleLogin()
@@ -30,11 +35,8 @@ const Login = () => {
         // setLogged(true);
 
         console.log(user);
-        
-         showToast(
-          `Welcome ${user.displayName}`
-        );
-     
+
+        showToast(`Welcome ${user.displayName}`);
       })
       .catch((error) => {
         // setError("Google login failed. Please try again.");
@@ -46,14 +48,11 @@ const Login = () => {
           "Sorry something wrong happened when trying to log in, Please try again!"
         );
       });
-
-
-
   };
 
   const handleGithubLogin = () => {
     gitHubLogin()
-          .then((result) => {
+      .then((result) => {
         const user = result.user;
         // setError("");
         setUser(user);
@@ -61,11 +60,35 @@ const Login = () => {
         // setLogged(true);
 
         console.log(user);
-        
-         showToast(
-          `Welcome ${user.displayName}`
+
+        showToast(`Welcome ${user.displayName}`);
+      })
+      .catch((error) => {
+        // setError("Google login failed. Please try again.");
+        // setErrorMsg(true);
+        // setMsgType(error.message);
+        console.log(error);
+
+        showToast(
+          "Sorry something wrong happened when trying to log in, Please try again!"
         );
-     
+      });
+  };
+
+  const handleLogIn = (e) => {
+    e.preventDefault();
+    const loginForm = new FormData(e.target);
+    const loginFormData = Object.fromEntries(loginForm.entries());
+    const email = loginFormData.email;
+    const password = loginFormData.password;
+    console.log(email, password);
+    // Invoking signIn firebase function
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        navigate(`${location.state ? location.state : "/"}`);
+        showToast(`Welcome ${user.displayName}`);
       })
       .catch((error) => {
         // setError("Google login failed. Please try again.");
@@ -80,18 +103,21 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen roboto-regular w-screen  dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] flex flex-col lg:flex-row items-center justify-center bg-cover bg-center gap-4 p-4">
+    <div className=" h-screen roboto-regular w-screen  dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] flex flex-col lg:flex-row items-center justify-center bg-cover bg-center gap-4 p-4">
       {/* Left Glass Card: Login form */}
-      <div className="w-full md:w-4/6 lg:w-2/6 h-[540px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tr-none lg:rounded-br-none shadow-2xl flex flex-col items-center justify-center hover:bg-white/5 space-y-6 p-8">
+      <div className="  w-full md:w-4/6 lg:w-2/6 h-[580px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tr-none lg:rounded-br-none shadow-2xl flex flex-col items-center justify-center hover:bg-white/5 space-y-6 p-8">
         {/* Header */}
         <div className="h-1/5 flex items-center">
-          <AnimatedGradientText className="p-2 lg:text-5xl text-3xl font-bold roboto-bold">
+          <AnimatedGradientText className="p-2 max-sm:pt-8 lg:text-5xl text-3xl font-bold roboto-bold">
             Login
           </AnimatedGradientText>
         </div>
 
         {/* Form */}
-        <form className="w-full max-w-md flex flex-col space-y-4">
+        <form
+          onSubmit={handleLogIn}
+          className="w-full max-w-md flex flex-col space-y-4"
+        >
           {/* Email */}
           <div className="flex flex-col space-y-2">
             <label
@@ -102,7 +128,7 @@ const Login = () => {
             </label>
             <input
               type="email"
-              id="email"
+              name="email"
               placeholder="Enter your email"
               className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder:text-xs placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-corange focus:border-transparent backdrop-blur-md"
             />
@@ -118,18 +144,18 @@ const Login = () => {
             </label>
             <input
               type="password"
-              id="password"
+              name="password"
               placeholder="Enter your password"
               className="w-full px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none placeholder:text-xs focus:ring-2 focus:ring-corange focus:border-transparent backdrop-blur-md"
             />
           </div>
 
           {/* Submit */}
-          <GradientShadowButton className="py-2">Log In</GradientShadowButton>
+          <GradientShadowButton className=" rounded-xl py-2">Log In</GradientShadowButton>
 
           {/* Helpers */}
           <div className="flex items-center justify-between text-xs text-white/80">
-            <a href="/forgot-password" className="hover:underline">
+            <a href="/forgot-password" className=" hover:underline">
               Forgot password?
             </a>
             <Link to="/register" className="hover:underline">
@@ -142,13 +168,11 @@ const Login = () => {
         <div className="flex  items-center justify-center text-xs text-white/80">
           <AnimatedGradientText>Or login with</AnimatedGradientText>
         </div>
-       
-      
-        <div className="flex max-sm:flex max-sm:flex-col justify-center gap-3">
+
+        <div className="flex  max-sm:flex max-sm:flex-col justify-center gap-3">
           {/* Github */}
           <button
-          onClick={handleGithubLogin}
-            
+            onClick={handleGithubLogin}
             className="btn bg-black text-white border-black"
           >
             <svg
@@ -168,7 +192,7 @@ const Login = () => {
 
           {/* Google */}
           <button
-          onClick={handleGoogleLogin}
+            onClick={handleGoogleLogin}
             className="btn bg-white text-black border-[#e5e5e5]"
           >
             <svg
@@ -200,25 +224,23 @@ const Login = () => {
             </svg>
             Login with Google
           </button>
-
         </div>
 
         {/* Dark Mode Toggle and Home  */}
-        <div className="flex gap-5">
+        <div className="flex max-sm:pb-8 gap-5">
           <Link to="/">
-            <GradientShadowButton className="scale-75 px-3 py-2 flex">
+            <GradientShadowButton className="rounded-xl scale-75 px-3 py-2 flex">
               <AiTwotoneHome size={20} />
             </GradientShadowButton>
           </Link>
 
           <DarkModeToggle />
         </div>
-
       </div>
 
       {/* Right Glass Card: HobbyHub content */}
 
-      <div className="relative hidden lg:flex hover:bg-white/5  w-full lg:w-2/6 h-[540px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tl-none lg:rounded-bl-none shadow-2xl flex-col justify-between p-8 overflow-hidden">
+      <div className="relative hidden lg:flex hover:bg-white/5  w-full lg:w-2/6 h-[580px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tl-none lg:rounded-bl-none shadow-2xl flex-col justify-between p-8 overflow-hidden">
         {/* Soft gradient accents */}
         <div className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-gradient-to-br from-corange/40 to-white/20 blur-2xl opacity-60" />
         <div className="pointer-events-none absolute -left-10 bottom-10 h-40 w-40 rounded-full bg-gradient-to-tr from-white/10 to-corange/40 blur-2xl opacity-50" />
@@ -282,15 +304,15 @@ const Login = () => {
         {/* Swiper Slider */}
         <div>
           <Swiper
-            modules={[Autoplay]} 
+            modules={[Autoplay]}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             rewind={true}
             speed={1000}
             slidesPerView={1}
             className="w-full h-32"
-            observer={true} 
-            observeParents={true} 
-            onInit={(s) => s.autoplay.start()} 
+            observer={true}
+            observeParents={true}
+            onInit={(s) => s.autoplay.start()}
           >
             {[
               "Discover local hobby groups",
@@ -309,7 +331,6 @@ const Login = () => {
           </Swiper>
         </div>
       </div>
-
     </div>
   );
 };

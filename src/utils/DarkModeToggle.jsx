@@ -6,7 +6,7 @@ const DarkModeToggle = () => {
   const {darkMode, setDarkMode} = use(ThemeContext)
 
   return (
-    <GradientShadowButton className="scale-75 px-3 py-2 flex">
+    <GradientShadowButton className="scale-75 rounded-xl px-3 py-2 flex">
 
       <label
         type="checkbox"

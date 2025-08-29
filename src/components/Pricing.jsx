@@ -157,7 +157,7 @@ const OfferCard = ({
 
         <GradientShadowButton
           onClick={() => console.log(`Selected ${title}`)}
-          className="my-12 w-full px-8 py-2 text-sm"
+          className="my-12 rounded-xl w-full px-8 py-2 text-sm"
         >
           Select
         </GradientShadowButton>

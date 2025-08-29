@@ -83,7 +83,7 @@ const Hero = () => {
       {/* Text Content Container */}
 
       <div className=" md:flex-col  lg:flex-col lg:pl-10 lg:flex-2 lg:pt-10 flex max-sm:flex-col max-sm:justify-center max-sm:items-center ">
-        <AnimatedGradientText className="md:mb-10 md:text-4xl md:text-center lg:text-left lg:text-7xl max-sm:text-3xl max-sm:text-center max-sm:mb-10 ">
+        <AnimatedGradientText className="lg:pb-4 md:mb-10  md:text-4xl md:text-center lg:text-left lg:text-7xl max-sm:text-3xl max-sm:text-center max-sm:mb-10 ">
           Your Hobby. <br /> Your Community. <br />
           <span className="max-sm:flex max-sm:justify-center lg:hidden ">
             Your Place.
@@ -125,16 +125,16 @@ const Hero = () => {
 
         <div className="md:justify-center lg:justify-start mt-3 md:mt-4 lg:mt-5 flex flex-col md:flex-row flex-wrap items-stretch md:items-center space-y-3 md:space-y-0 md:space-x-4 lg:space-x-5 max-sm:flex max-sm:w-4/6">
 
-          <GradientShadowButton className="w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2 
-          max-sm:text-xs max-sm:px-2 
+          <GradientShadowButton className="rounded-xl w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2 
+          max-sm:text-[10px] max-sm:px-2 
           ">
-            <FaUsers className="text-base max-sm:text-xs" />
+            <FaUsers className="text-base max-sm:text-lg" />
             Create an Instant Group
           </GradientShadowButton>
 
-          <GradientShadowButton className="w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2
-          max-sm:text-xs max-sm:px-2">
-            <FaSearch className="text-base max-sm:text-xs" />
+          <GradientShadowButton className="rounded-xl w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2
+          max-sm:text-[10px] max-sm:px-2">
+            <FaSearch className="text-base max-sm:text-base" />
             Search Ideas!
           </GradientShadowButton>
         </div>

@@ -43,6 +43,7 @@ const AuthProvider = ({ children }) => {
 
   //Github Login 
   const gitHubLogin =() => {
+    setLoading(true);
     const githubProvider = new GithubAuthProvider();
     return signInWithPopup(auth ,githubProvider);
   };

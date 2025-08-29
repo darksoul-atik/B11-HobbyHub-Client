@@ -4,10 +4,14 @@ import hobbyhub from "../assets/hobbyhub.png";
 import GradientShadowButton from "../utils/GradientShadowButton";
 import DarkModeToggle from "../utils/DarkModeToggle";
 import { AuthContext } from "../contexts/AuthContext";
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
+ 
+  
   const handleLogout = () => {
     logOut()
       .then((result) => {
@@ -24,17 +28,15 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/groups">All Groups</NavLink>
+        <NavLink to="/allgroups">All Groups</NavLink>
       </li>
       <li>
-        <NavLink to="/createGroup">Create Group</NavLink>
+        <NavLink to="/creategroup">Create Group</NavLink>
       </li>
       <li>
-        <NavLink to="/myGroups">My Groups</NavLink>
+        <NavLink to="/mygroups">My Groups</NavLink>
       </li>
-      <li className="text-red-700">
-        <NavLink>{user?.displayName}</NavLink>
-      </li>
+ 
     </>
   );
 
@@ -72,34 +74,56 @@ const Navbar = () => {
         </div>
 
         {/* Brand Logo */}
-        <NavLink
+        <Link
           to="/"
           className="text-2xl font-bold tracking-tight px-2 no-underline hover:no-underline select-none"
         >
-          <img className="w-25 max-sm:w-15" src={hobbyhub} alt="hobbyhub" />
-        </NavLink>
+          <img className="w-25 max-sm:w-20" src={hobbyhub} alt="hobbyhub" />
+        </Link>
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{links}</ul>
+        <ul className="menu menu-horizontal space-x-5 px-1">{links}</ul>
       </div>
 
       <div className="navbar-end">
         <DarkModeToggle></DarkModeToggle>
 
-        <GradientShadowButton className=" max-sm:btn-xs  max-sm:text-xs max-sm:px-2 px-2 text-sm py-2 scale-90">
-          Profile
+        <GradientShadowButton className="p-1 lg:w-10 lg:h-10 max-sm:h-9 max-sm:w-9  max-sm:btn-xs  max-sm:text-xs rounded-full text-sm  scale-90">
+          {user ? (
+            <>
+              <a
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content={user?.displayName ||"No User"}
+              >
+                <img
+                  className="w-full h-full rounded-full"
+                  src={user?.photoURL}
+                  alt="User Image"
+                />
+              </a>
+
+              <Tooltip id="my-tooltip" />
+            </>
+          ) : (
+            <>
+              <img
+                src="https://i.postimg.cc/mgvBzLt5/user.png"
+                alt="Default Image"
+              />
+            </>
+          )}
         </GradientShadowButton>
 
         {user ? (
           <Link onClick={handleLogout}>
-            <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
+            <GradientShadowButton className=" rounded-xl max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
               Log out
             </GradientShadowButton>
           </Link>
         ) : (
-          <Link to="/login" >
-            <GradientShadowButton className=" max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
+          <Link to="/login">
+            <GradientShadowButton className=" rounded-xl max-sm:btn-xs max-sm:px-2 max-sm:text-xs px-2 text-sm py-2 scale-90">
               Log in
             </GradientShadowButton>
           </Link>

@@ -23,7 +23,9 @@
     "react-fast-marquee": "^1.6.5",
     "react-hot-toast": "^2.6.0",
     "react-simple-typewriter": "^5.0.1",
+    "react-spinners": "^0.17.0",
     "react-spring": "^10.0.1",
+    "react-tooltip": "^5.29.1",
     "react-useanimations": "^2.10.0",
     "swiper": "^11.2.10",
     "tailwind-merge": "^3.3.1"

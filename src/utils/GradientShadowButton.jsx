@@ -8,7 +8,7 @@ const GradientShadowButton = ({ children, onClick, className = "" }) => (
       bg-[length:200%_100%] bg-left
       hover:bg-right
       text-white font-semibold
-      rounded-xl
+     
       shadow-lg
       transition-all duration-500 ease-in-out
       cursor-pointer

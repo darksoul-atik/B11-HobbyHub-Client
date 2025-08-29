@@ -4,7 +4,7 @@ import { ToastContext } from "../contexts/ToastContext";
 import UseAnimations from "react-useanimations";
 import activity from "react-useanimations/lib/activity";
 import alertTriangle from "react-useanimations/lib/alertTriangle";
-import alertCircle from "react-useanimations/lib/alertTriangle";
+import alertCircle from "react-useanimations/lib/alertCircle";
 
 const ToastProvider = ({ children }) => {
   const showToast = (text, type) => {
@@ -12,7 +12,7 @@ const ToastProvider = ({ children }) => {
       <div
         className={`${
           t.visible ? "animate-custom-enter" : "animate-custom-leave"
-        } max-w-md w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl border-2 pointer-events-auto flex `}
+        } max-w-md w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-xl border-2 pointer-events-auto flex`}
       >
         <div className="flex-1 w-0 p-4">
           <div className="flex items-start">
@@ -26,16 +26,14 @@ const ToastProvider = ({ children }) => {
               {type === "else" && (
                 <UseAnimations animation={alertCircle} strokeColor="white" size={36} autoplay />
               )}
-              <p className="text-sm  text-lwhite font-medium ">
-                {text}
-              </p>
+              <p className="text-sm text-lwhite font-medium">{text}</p>
             </div>
           </div>
         </div>
-        <div className="flex ">
+        <div className="flex">
           <button
             onClick={() => toast.dismiss(t.id)}
-            className="w-full  rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-white hover:text-[var(--color-cpurple)] focus:outline-none focus:ring-2 focus:ring-[var(--color-cpink)]"
+            className="w-full rounded-none rounded-r-lg p-4 flex items-center cursor-pointer justify-center text-sm font-medium text-white"
           >
             Close
           </button>
@@ -46,7 +44,8 @@ const ToastProvider = ({ children }) => {
 
   return (
     <ToastContext value={{ showToast }}>
-      <Toaster position="top-right" />
+     
+      <Toaster position="top-right" toastOptions={{ duration: 1000 }} />
       {children}
     </ToastContext>
   );
