@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar  dark:bg-lwhite dark:text-lcyan flex  items-center lg:text-white roboto-medium bg-cblack lg:px-40 mx-auto">
-      <div className="navbar-start flex items-center  gap-3">
+      <div className="navbar-start  flex items-center  gap-3">
         {/* Mobile dropdown menu button */}
         <div className="dropdown ">
           <div
@@ -89,7 +89,7 @@ const Navbar = () => {
       <div className="navbar-end">
         <DarkModeToggle></DarkModeToggle>
 
-        <GradientShadowButton className="p-1 lg:w-10 lg:h-10 max-sm:h-9 max-sm:w-9  max-sm:btn-xs  max-sm:text-xs rounded-full text-sm  scale-90">
+        <GradientShadowButton className="  p-1 lg:w-10 lg:h-10 max-md:h-9 max-md:w-9  max-sm:btn-xs  max-sm:text-xs rounded-full text-sm  scale-90">
           {user ? (
             <>
               <a
@@ -97,7 +97,7 @@ const Navbar = () => {
                 data-tooltip-content={user?.displayName ||"No User"}
               >
                 <img
-                  className="w-full h-full rounded-full"
+                  className=" w-full h-full rounded-full"
                   src={user?.photoURL}
                   alt="User Image"
                 />

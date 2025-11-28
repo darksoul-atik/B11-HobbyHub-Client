@@ -12,6 +12,7 @@ import { FaQuoteLeft } from "react-icons/fa";
 import GradientShadowButton from "../utils/GradientShadowButton";
 import { FaUsers, FaSearch } from "react-icons/fa";
 
+
 const Hero = () => {
   const [text] = useTypewriter({
     words: [
@@ -139,6 +140,8 @@ const Hero = () => {
           </GradientShadowButton>
         </div>
       </div>
+
+     
     </div>
   );
 };

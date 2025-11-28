@@ -330,6 +330,7 @@ const Login = () => {
             ))}
           </Swiper>
         </div>
+        
       </div>
     </div>
   );

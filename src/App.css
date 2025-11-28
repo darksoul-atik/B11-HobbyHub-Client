@@ -105,7 +105,7 @@
 .active {
   position: relative;
   z-index: 0;
-  color: #ffffff;                    
+  color: #e34e98;                    
   text-decoration: none;
   text-shadow: 0 0 12px rgba(236, 72, 153, 0.35); 
   transition: color .3s ease, text-shadow .3s ease;
@@ -152,6 +152,21 @@
 .active:hover {
   text-shadow: 0 0 16px rgba(236, 72, 153, 0.5);
 }
+/* 📱 Mobile: hide underline completely */
+.active::after {
+  display: none;
+}
+
+/* 🖥 Desktop (md+): show centered underline */
+@media (min-width: 768px) {
+  .active::after {
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+
 
 /* Animations */
 @keyframes underline-shimmer {
