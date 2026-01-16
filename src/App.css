@@ -187,6 +187,36 @@
   }
 }
 
+.clamp-3-with-dots {
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;  /* number of lines */
+  overflow: hidden;
+  /* optional: add some right padding so text doesn't run under the dots */
+  padding-right: 0.75rem;
+}
+
+/* manual "...." after clamped text */
+.clamp-3-with-dots::after {
+  content: " ....";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /* match this to your background so it covers the underlying text */
+  background-color: white; /* <-- change to your card/bg color */
+}
+
+
+.light-rays-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
 
 
 
@@ -203,3 +233,4 @@
   --color-lpink:   #f06aa8; /* accent tint */
   --color-lcyan:   #5b7893; /* slate-cyan tint */
 }
+

@@ -7,6 +7,8 @@ import Mainlayout from "../layouts/Mainlayout";
 import PrivateRoute from "./PrivateRoute";
 import AllGroups from "../pages/AllGroups";
 import MyGroups from "../pages/MyGroups";
+import GroupDetails from "../components/GroupDetails";
+import GroupUpdate from "../components/GroupUpdate";
 
 export const router = createBrowserRouter([
   {
@@ -34,11 +36,33 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/allgroups",
+        path: "/groups",
+        loader: () => fetch("http://localhost:3000/groups"),
         element: <AllGroups></AllGroups>,
+      },
+      {
+        path: "/groups/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/groups/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <GroupDetails></GroupDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+         path: "/updateGroup/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/groups/${params.id}`),
+        element: (
+          <PrivateRoute>
+           <GroupUpdate></GroupUpdate>
+          </PrivateRoute>
+        ),
       },
     ],
   },
+
   {
     path: "/login",
     element: <Login></Login>,

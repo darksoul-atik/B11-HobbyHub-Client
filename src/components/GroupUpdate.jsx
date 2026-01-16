@@ -9,11 +9,30 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { AuthContext } from "../contexts/AuthContext";
 import { ToastContext } from "../contexts/ToastContext";
+import { useLoaderData } from "react-router";
+import GroupDetails from "./GroupDetails";
 
-const CreateGroups = () => {
+const GroupUpdate = () => {
   // Contexts
-  const auth = useContext(AuthContext); // { user, ... }
+  const auth = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
+
+  const {
+    _id,
+    groupName,
+    description,
+    hobbyCategory,
+    _hostEmail,
+    _hostName,
+    _hostPhotoURL,
+    _hostUid,
+    imageUrl,
+    maxMembers,
+    meetingLocation,
+    startDate,
+    _userEmail,
+    _userName,
+  } = useLoaderData();
 
   const defaultImageURL = "https://i.postimg.cc/qRMLLKdT/events-default.jpg";
 
@@ -33,7 +52,6 @@ const CreateGroups = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-  
     if (!auth?.user) {
       showToast("Please login first to create a group.", "error");
       return;
@@ -48,7 +66,8 @@ const CreateGroups = () => {
       formDataObject.imageUrl = defaultImageURL;
     }
 
- 
+    alert(formDataObject.maxMembers)
+
     formDataObject.hostName = displayName;
     formDataObject.hostEmail = email;
     formDataObject.hostPhotoURL = photoURL;
@@ -56,30 +75,30 @@ const CreateGroups = () => {
     formDataObject.userName = displayName;
     formDataObject.userEmail = email;
 
-    fetch("http://localhost:3000/groups", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formDataObject),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.insertedId) {
-          showToast(`${formDataObject?.groupName} has been created successfully`);
-          form.reset();
-        } else {
-          showToast("Error occurred while creating event, please try again", "error");
-        }
-      })
-      .catch(() => {
-        showToast("Server error. Please try again later.", "error");
-      });
+    // fetch("http://localhost:3000/groups/", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formDataObject),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data?.insertedId) {
+    //       showToast(`${formDataObject?.groupName} has been created successfully`);
+    //       form.reset();
+    //     } else {
+    //       showToast("Error occurred while creating event, please try again", "error");
+    //     }
+    //   })
+    //   .catch(() => {
+    //     showToast("Server error. Please try again later.", "error");
+    //   });
   };
 
   return (
     <div className="hero min-h-screen dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')]  rounded-lg mt-5 mb-5 bg-cblack dark:bg-lblack">
-      <div className="hero-content max-sm:py-10 max-sm:px-3 px-10 gap-10 flex-col lg:flex-row-reverse w-full">
+      <div className="hero-content max-sm:py-10 max-sm:px-3 px-10 gap-10 flex-col lg:flex-row w-full">
         {/* FORM CARD */}
         <div
           className="
@@ -92,10 +111,8 @@ const CreateGroups = () => {
           "
         >
           <div className="card-body">
-            <AnimatedGradientText
-              className="max-sm:text-lg roboto-bold text-2xl font-bold mb-4 text-primary"
-            >
-              Create a Hobby Group
+            <AnimatedGradientText className="max-sm:text-lg roboto-bold text-2xl font-bold mb-4 text-primary">
+              Edit Information
             </AnimatedGradientText>
 
             <form className="space-y-3 roboto-light" onSubmit={handleSubmit}>
@@ -116,6 +133,7 @@ const CreateGroups = () => {
                     dark:bg-lwhite dark:border-lcyan dark:text-black dark:font-regular
                     focus:outline-none focus:ring-0 focus:border-cpink
                   "
+                  defaultValue={groupName}
                   required
                 />
               </div>
@@ -136,7 +154,7 @@ const CreateGroups = () => {
                     dark:bg-lwhite dark:border-lcyan
                     focus:outline-none focus:ring-0 focus:border-cpink
                   "
-                  defaultValue=""
+                  defaultValue={hobbyCategory}
                   required
                 >
                   <option value="" disabled>
@@ -171,6 +189,7 @@ const CreateGroups = () => {
                     bg-purple-800/50 text-base-content
                     dark:bg-lwhite dark:border-lcyan dark:text-black
                   "
+                  defaultValue={description}
                   required
                 />
               </div>
@@ -192,6 +211,7 @@ const CreateGroups = () => {
                     dark:bg-lwhite dark:border-lcyan dark:text-black
                     focus:outline-none focus:ring-0 focus:border-cpink
                   "
+                  defaultValue={meetingLocation}
                   required
                 />
               </div>
@@ -214,6 +234,7 @@ const CreateGroups = () => {
                     dark:bg-lwhite dark:border-lcyan dark:text-black
                     focus:outline-none focus:ring-0 focus:border-cpink
                   "
+                  defaultValue={maxMembers}
                   required
                 />
               </div>
@@ -235,6 +256,7 @@ const CreateGroups = () => {
                     dark:bg-lwhite dark:border-lcyan dark:text-black
                     focus:outline-none focus:ring-0 focus:border-cpink
                   "
+                  defaultValue={startDate}
                   required
                 />
               </div>
@@ -256,6 +278,7 @@ const CreateGroups = () => {
                     dark:bg-lwhite dark:border-lcyan dark:text-black
                     focus:outline-none focus:ring-0 focus:border-cpink
                   "
+                  defaultValue={imageUrl}
                 />
               </div>
 
@@ -303,43 +326,11 @@ const CreateGroups = () => {
 
               {/* Create Button */}
               <div className="form-control flex justify-center mt-4">
-                <GradientShadowButton className="px-5 py-1 rounded-md">
-                  Create
+                <GradientShadowButton  className="px-5 py-1 rounded-md">
+                 Save
                 </GradientShadowButton>
               </div>
             </form>
-          </div>
-        </div>
-
-        {/* SIDE TEXT */}
-        <div className="text-center roboto-regular lg:text-left max-w-md lg:mr-8 mt-6 lg:mt-0">
-          <div>
-            <Swiper
-              modules={[Autoplay]}
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
-              rewind={true}
-              speed={1000}
-              slidesPerView={1}
-              className="w-72 max-sm:w-40 h-auto"
-              observer={true}
-              observeParents={true}
-              onInit={(s) => s.autoplay.start()}
-            >
-              {[
-                "Start your own hobby group. Inspire people to gather and create something meaningful together.",
-                "Create a group around what you love. Watch your hobby turn into a thriving community.",
-                "Start a place where hobbies come alive. Connect with people who share the same spark.",
-                "Build a hobby group from the ground up. Bring people together with shared excitement.",
-                "Start something special with your hobby. Give people a reason to come together.",
-              ].map((text, i) => (
-                <SwiperSlide
-                  key={i}
-                  className="flex roboto-bold items-center justify-center text-center text-white text-xl font-semibold"
-                >
-                  <div>{text}</div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
           </div>
         </div>
       </div>
@@ -347,4 +338,4 @@ const CreateGroups = () => {
   );
 };
 
-export default CreateGroups;
+export default GroupUpdate;

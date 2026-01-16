@@ -10,6 +10,9 @@ import { Tooltip } from "react-tooltip";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
+  console.log(user);
+  
+
  
   
   const handleLogout = () => {
@@ -28,7 +31,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/allgroups">All Groups</NavLink>
+        <NavLink to="/groups">Groups</NavLink>
       </li>
       <li>
         <NavLink to="/creategroup">Create Group</NavLink>
@@ -89,7 +92,7 @@ const Navbar = () => {
       <div className="navbar-end">
         <DarkModeToggle></DarkModeToggle>
 
-        <GradientShadowButton className="  p-1 lg:w-10 lg:h-10 max-md:h-9 max-md:w-9  max-sm:btn-xs  max-sm:text-xs rounded-full text-sm  scale-90">
+        <GradientShadowButton className="  p-1 h-10 w-10 max-sm:btn-xs  max-sm:text-xs rounded-full text-sm  scale-90">
           {user ? (
             <>
               <a
@@ -97,7 +100,7 @@ const Navbar = () => {
                 data-tooltip-content={user?.displayName ||"No User"}
               >
                 <img
-                  className=" w-full h-full rounded-full"
+                  className=" w-full  h-full rounded-full"
                   src={user?.photoURL}
                   alt="User Image"
                 />
