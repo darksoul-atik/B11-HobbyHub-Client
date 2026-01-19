@@ -9,11 +9,13 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { AuthContext } from "../contexts/AuthContext";
 import { ToastContext } from "../contexts/ToastContext";
+import { useNavigate } from "react-router";
 
 const CreateGroups = () => {
   // Contexts
   const auth = useContext(AuthContext); // { user, ... }
   const { showToast } = useContext(ToastContext);
+  const navigate = useNavigate();
 
   const defaultImageURL = "https://i.postimg.cc/qRMLLKdT/events-default.jpg";
 
@@ -68,6 +70,7 @@ const CreateGroups = () => {
         if (data?.insertedId) {
           showToast(`${formDataObject?.groupName} has been created successfully`);
           form.reset();
+          navigate('/groups')
         } else {
           showToast("Error occurred while creating event, please try again", "error");
         }

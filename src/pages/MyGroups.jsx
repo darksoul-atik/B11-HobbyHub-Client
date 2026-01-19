@@ -1,11 +1,71 @@
-import React from 'react';
+import React, { useContext, useState } from "react";
+import { useLoaderData } from "react-router";
+import MyGroup from "../components/MyGroup";
+import { AuthContext } from "../contexts/AuthContext";
+import AnimatedGradientText from "../utils/AnimatedGradientText";
 
 const MyGroups = () => {
-    return (
-        <div>
-            this is My Group
-        </div>
-    );
+  const initialGroups = useLoaderData() ?? [];
+  const [updatedGroups, setUpdatedGroups] = useState(initialGroups);
+
+  const { user } = useContext(AuthContext);
+  console.log(user);
+
+  const myGroups = updatedGroups.filter(
+    (group) => group.hostEmail === user?.email,
+  );
+
+  return (
+    <div
+      className="
+    px-2 py-4 sm:p-6
+    bg-center bg-cover bg-no-repeat
+    bg-[linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.35)),url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')]
+    dark:bg-[linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,.45)),url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')]
+    rounded-2xl
+    border border-white/10
+    shadow-lg
+  "
+    >
+      <h2 className="roboto-bold text-center text-base sm:text-lg md:text-xl mb-4 text-white">
+        <span className="flex flex-col">
+          <span className="text-xs">Groups managed by</span>
+          <AnimatedGradientText className="text-xl">
+            {user.displayName}
+          </AnimatedGradientText>
+        </span>
+      </h2>
+
+      <hr className="mb-2 opacity-50" />
+
+      <div className="overflow-x-auto">
+        <table className="table table-fixed w-full">
+          {/* Hide table head on xs (mobile) */}
+          <thead className="hidden sm:table-header-group">
+            <tr className="text-xs md:text-sm">
+              <th className="w-[45%] roboto-bold">Group Name</th>
+              <th className="w-[25%] text-center roboto-bold">
+                Members Joined
+              </th>
+              <th className="w-[10%]  roboto-bold"></th>
+              <th className="w-[10%] roboto-bold"></th>
+              <th className="w-[10%] roboto-bold"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {myGroups.map((group) => (
+              <MyGroup
+                key={group._id}
+                group={group}
+                setUpdatedGroups={setUpdatedGroups}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default MyGroups;

@@ -9,13 +9,15 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { AuthContext } from "../contexts/AuthContext";
 import { ToastContext } from "../contexts/ToastContext";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import GroupDetails from "./GroupDetails";
+import { ChevronsLeft } from "lucide-react";
 
 const GroupUpdate = () => {
   // Contexts
   const auth = useContext(AuthContext);
   const { showToast } = useContext(ToastContext);
+  const navigate = useNavigate();
 
   const {
     _id,
@@ -66,8 +68,7 @@ const GroupUpdate = () => {
       formDataObject.imageUrl = defaultImageURL;
     }
 
-    alert(formDataObject.maxMembers)
-
+    
     formDataObject.hostName = displayName;
     formDataObject.hostEmail = email;
     formDataObject.hostPhotoURL = photoURL;
@@ -75,30 +76,40 @@ const GroupUpdate = () => {
     formDataObject.userName = displayName;
     formDataObject.userEmail = email;
 
-    // fetch("http://localhost:3000/groups/", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formDataObject),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data?.insertedId) {
-    //       showToast(`${formDataObject?.groupName} has been created successfully`);
-    //       form.reset();
-    //     } else {
-    //       showToast("Error occurred while creating event, please try again", "error");
-    //     }
-    //   })
-    //   .catch(() => {
-    //     showToast("Server error. Please try again later.", "error");
-    //   });
+    fetch(`http://localhost:3000/groups/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formDataObject),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          showToast(`${formDataObject?.groupName} has been updated successfully`);
+          form.reset();
+          navigate('/groups')
+
+        } else {
+          showToast("Error occurred while updating group, please try again", "error");
+        }
+      })
+      .catch(() => {
+        showToast("Server error. Please try again later.", "error");
+      });
+
+ 
+    
   };
 
   return (
     <div className="hero min-h-screen dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')]  rounded-lg mt-5 mb-5 bg-cblack dark:bg-lblack">
+      
       <div className="hero-content max-sm:py-10 max-sm:px-3 px-10 gap-10 flex-col lg:flex-row w-full">
+
+      
+
+
         {/* FORM CARD */}
         <div
           className="
@@ -331,6 +342,21 @@ const GroupUpdate = () => {
                 </GradientShadowButton>
               </div>
             </form>
+
+
+
+                {/* Back Button */}
+      <div className="self-center mt-5 mb-2">
+        <GradientShadowButton
+          onClick={() => {
+            navigate(`/groups/${_id}`);
+          }}
+          className="pr-2 rounded-lg text-xs flex items-center justify-center  px-1 py-1 roboto-regular"
+        >
+          <ChevronsLeft /> Back to Group
+        </GradientShadowButton>
+      </div>
+
           </div>
         </div>
       </div>

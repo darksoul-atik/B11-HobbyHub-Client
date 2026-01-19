@@ -29,6 +29,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/mygroups",
+        loader: () => fetch("http://localhost:3000/groups"),
         element: (
           <PrivateRoute>
             <MyGroups></MyGroups>
