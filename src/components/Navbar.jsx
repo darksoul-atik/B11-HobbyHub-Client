@@ -10,11 +10,6 @@ import { Tooltip } from "react-tooltip";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
-
-  
-
- 
-  
   const handleLogout = () => {
     logOut()
       .then((result) => {
@@ -39,7 +34,6 @@ const Navbar = () => {
       <li>
         <NavLink to="/mygroups">My Groups</NavLink>
       </li>
- 
     </>
   );
 
@@ -97,7 +91,7 @@ const Navbar = () => {
             <>
               <a
                 data-tooltip-id="my-tooltip"
-                data-tooltip-content={user?.displayName ||"No User"}
+                data-tooltip-content={user?.displayName || "No User"}
               >
                 <img
                   className=" w-full  h-full rounded-full"

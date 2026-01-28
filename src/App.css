@@ -219,10 +219,14 @@
 
 
 
+/* 
 
 
+
+
+*/
 @theme{
-  --color-cblack: #1d1918;      /* deep black/brown-black */
+  --color-cblack: #0f0e17;      /* rich dark purple-black *     /* deep black/brown-black */
   --color-cpurple: #4640a8;     /* rich purple */
   --color-cpink: #e34e98;      /* vivid pink */
   --color-ccyan: #2b455e;      /* slate cyan */
@@ -233,4 +237,5 @@
   --color-lpink:   #f06aa8; /* accent tint */
   --color-lcyan:   #5b7893; /* slate-cyan tint */
 }
+
 

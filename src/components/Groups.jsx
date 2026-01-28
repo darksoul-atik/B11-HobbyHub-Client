@@ -16,9 +16,9 @@ import { Link } from "react-router";
 
 const Groups = ({ group }) => {
   const description = group.description.slice(0, 400) + "......";
-
   const startDate = group.startDate;
   const todaysDate = new Date().toISOString().split("T")[0];
+  const altImage = "https://i.postimg.cc/mgvBzLt5/user.png";
 
   return (
     <div className="roboto-regular ">
@@ -43,19 +43,24 @@ const Groups = ({ group }) => {
 
               <div className="flex gap-2 lg:mt-2 justify-center flex-col items-center">
                 <div className="lg:w-8">
+
+                  {/* Important coding part-> firebase er image na na ashle ei logic dile image error fix kora jabe */}
                   <img
                     className="rounded-full w-full"
-                    src={group.hostPhotoURL}
+                    src={group.hostPhotoURL || altImage}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = altImage;
+                    }}
                   />
                 </div>
                 <span className="roboto-regular text-xs roboto-bold">
-                  Hosted by {group?.userName}
+                  Hosted by <span className="text-cpink">{group?.userName}</span> 
                 </span>
               </div>
             </div>
 
             <div>
-
               <Typography
                 className="h-20 text-ellipsis roboto-regular text-gray-400 line-clamp-3 text-xs"
                 color="gray"
@@ -63,11 +68,10 @@ const Groups = ({ group }) => {
                 {description}
               </Typography>
 
-
-
               <div className="flex  roboto-regular flex-col pt-3 my-2 gap-2">
                 <span className="font-bold flex items-center gap-2 roboto-bold text-sm max-sm:text-xs text-white">
-                  <FaPeopleGroup /> Members : 0/{group.maxMembers}
+                  <FaPeopleGroup /> Members : {group?.members?.length ?? 0}/{group?.maxMembers}
+
                 </span>
 
                 <span className="font-bold flex items-center gap-2 roboto-bold text-sm max-sm:text-xs text-white">
@@ -91,9 +95,6 @@ const Groups = ({ group }) => {
                   <BiCategory /> Category : {group.hobbyCategory || "N/A"}
                 </span>
               </div>
-
-
-
             </div>
           </CardBody>
 

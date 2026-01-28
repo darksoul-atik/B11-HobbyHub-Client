@@ -25,6 +25,11 @@ const CreateGroups = () => {
   const photoURL = auth?.user?.photoURL || "";
   const uid = auth?.user?.uid || "";
 
+  //Github logins
+  const isGitHubUser = auth?.user?.providerData?.some(
+    (p) => p?.providerId === "github.com",
+  );
+
   // Date (min today)
   const today = new Date();
   const year = today.getFullYear();
@@ -35,7 +40,6 @@ const CreateGroups = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-  
     if (!auth?.user) {
       showToast("Please login first to create a group.", "error");
       return;
@@ -50,13 +54,18 @@ const CreateGroups = () => {
       formDataObject.imageUrl = defaultImageURL;
     }
 
- 
     formDataObject.hostName = displayName;
     formDataObject.hostEmail = email;
     formDataObject.hostPhotoURL = photoURL;
     formDataObject.hostUid = uid;
     formDataObject.userName = displayName;
     formDataObject.userEmail = email;
+
+    //If its logged in by Github
+    if (isGitHubUser) {
+      formDataObject.hostUid = auth?.user?.uid;
+      formDataObject.hostEmail = `Discord User: ${auth?.user?.displayName || "Unknown"}`;
+    }
 
     fetch("http://localhost:3000/groups", {
       method: "POST",
@@ -68,11 +77,16 @@ const CreateGroups = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.insertedId) {
-          showToast(`${formDataObject?.groupName} has been created successfully`);
+          showToast(
+            `${formDataObject?.groupName} has been created successfully`,
+          );
           form.reset();
-          navigate('/groups')
+          navigate("/groups");
         } else {
-          showToast("Error occurred while creating event, please try again", "error");
+          showToast(
+            "Error occurred while creating event, please try again",
+            "error",
+          );
         }
       })
       .catch(() => {
@@ -95,9 +109,7 @@ const CreateGroups = () => {
           "
         >
           <div className="card-body">
-            <AnimatedGradientText
-              className="max-sm:text-lg roboto-bold text-2xl font-bold mb-4 text-primary"
-            >
+            <AnimatedGradientText className="max-sm:text-lg roboto-bold text-2xl font-bold mb-4 text-primary">
               Create a Hobby Group
             </AnimatedGradientText>
 

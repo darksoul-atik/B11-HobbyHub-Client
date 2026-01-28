@@ -7,11 +7,15 @@ import { ToastContext } from "../contexts/ToastContext";
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
+  const providerId = user?.providerData?.[0]?.providerId;
+
+
+  
 
   if (loading) {
     return <FullScreenLoader></FullScreenLoader>;
   }
-  if (user && user?.email) {
+  if (user && (user.email || providerId)) {
     return children;
   } else {
     return (

@@ -2,15 +2,25 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthContext";
-import GradientShadowButton from "../utils/GradientShadowButton";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { HiUserRemove } from "react-icons/hi";
 
 const MyGroup = ({ group }) => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const host = user?.email === group?.hostEmail;
 
+  // Email Host Check (your system)
+  const hostByEmail = user?.email === group?.hostEmail;
+
+  // GitHub Host Check (fallback)
+  const isGitHubUser = user?.providerData?.some(
+    (p) => p?.providerId === "github.com"
+  );
+
+  const hostByUid = isGitHubUser && user?.uid === group?.hostUid;
+
+  // Final host condition (email OR github)
+  const host = hostByEmail || hostByUid;
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -262,7 +272,7 @@ const MyGroup = ({ group }) => {
           </Link>
         </td>
 
-        {/*  Delete */}
+        {/* Delete */}
         <td className="w-[15%]">
           <button
             onClick={() => handleDelete(group._id)}
@@ -280,7 +290,7 @@ const MyGroup = ({ group }) => {
           </button>
         </td>
 
-        {/*  Remove Member */}
+        {/* Remove Member */}
         <td className="w-[15%]">
           <button
             className={`px-2 font-semibold py-1 rounded-lg text-xs cursor-pointer
