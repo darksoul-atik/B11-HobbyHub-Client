@@ -8,18 +8,18 @@ import Swal from "sweetalert2";
 import { Tooltip } from "react-tooltip";
 import { ChevronsLeft } from "lucide-react";
 import { ToastContext } from "../contexts/ToastContext";
+import Comments from "./Comments";
+import ShowAllComment from "./ShowAllComment";
 
 const GroupDetails = () => {
   const groupInfo = useLoaderData();
   const dateStatus = TimeCount(groupInfo);
   const { showToast } = useContext(ToastContext);
   const { user } = useContext(AuthContext);
+  const [refreshComment, setRefreshComment] = useState(false);
+  // const [editStatus, setEditStatus] = useState(false);
   const navigate = useNavigate();
-  const timeOver =  dateStatus === "Event date has expired";
-
-
-  
-  
+  const timeOver = dateStatus === "Event date has expired";
 
   const isGitHubUser = user?.providerData?.some(
     (p) => p?.providerId === "github.com",
@@ -35,7 +35,9 @@ const GroupDetails = () => {
   const [joined, setJoined] = useState(initialJoinedState);
   const isOverLimit = member.length >= groupInfo.maxMembers;
   const altImage = "https://i.postimg.cc/mgvBzLt5/user.png";
+  const isHost = user.email === groupInfo.hostEmail;
 
+  // Group Join Related functions
   const handleLimit = () => {
     showToast(
       "This group has reached its maximum capacity. Please contact the host to request additional slots.",
@@ -112,8 +114,57 @@ const GroupDetails = () => {
       })
       .catch(() => showToast("Server error. Please try again later.", "error"));
   };
+
+  //Admin Related Functions
   const handleReport = () => {
     showToast("Reported to Admin");
+  };
+
+  // Comment Related Functions
+  const handleRefreshComments = () => {
+    setRefreshComment((prev) => !prev);
+  };
+
+const handleEditComment = (commentId, editedText) => {
+  const groupId = groupInfo._id;
+  const editTime = new Date().toISOString();
+
+  fetch(
+    `http://localhost:3000/groups/${groupId}/comments/${commentId}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        editedCommentText: editedText,
+        editTime,
+      }),
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      if (data?.modifiedCount) {
+        showToast("Comment edited successfully!");
+        // setEditStatus(true);
+      } else {
+        showToast("No changes were made.", "error");
+      }
+    })
+    .catch(() =>
+      showToast("Server error. Please try again later.", "error")
+    );
+};
+
+
+
+
+
+
+
+  const handleDeleteComment = (id) => {
+    console.log(id);
+  };
+  const handleReplyComment = (id, comment) => {
+    console.log(id, comment);
   };
 
   return (
@@ -415,7 +466,6 @@ const GroupDetails = () => {
           </div>
         </div>
 
-
         {/* Members of Group Section */}
 
         <div className="mt-5 roboto-bold">
@@ -423,8 +473,6 @@ const GroupDetails = () => {
           <p>Joined Members</p>
 
           <div className="mt-4  flex flex-wrap">
-
-          
             {member?.map((m, idx) => (
               <a
                 key={m.email || idx}
@@ -441,9 +489,44 @@ const GroupDetails = () => {
               </a>
             ))}
 
-            <Tooltip id="member-tooltip" place="bottom"/>
-         </div>
+            <Tooltip id="member-tooltip" place="bottom" />
+          </div>
         </div>
+
+        {/* Post Comment Section */}
+        <div className="mt-2 roboto-regular flex flex-col gap-1 ">
+          <span className="text-xs roboto-regular text-amber-60 flex items-center gap-2">
+            Commenting as{" "}
+            <span className="font-medium text-cpink">{user.displayName}</span>.
+            Your question will be sent to the host.
+            {/* Disclaimer hover icon (keeps your existing styles) */}
+            <span
+              data-tooltip-id="comment-guidelines"
+              data-tooltip-content="Please keep comments respectful. Don’t use sexual, explicit, or sensitive language."
+              className="cursor-pointer inline-flex items-center justify-center"
+            >
+              <span className="w-4 h-4 bg-red-900 rounded-full border text-[10px] leading-none flex items-center justify-center">
+                i
+              </span>
+            </span>
+            <Tooltip id="comment-guidelines" place="top" />
+          </span>
+
+          <Comments
+            groupId={groupInfo._id}
+            handleRefreshComments={handleRefreshComments}
+          />
+        </div>
+
+        {/*Show All Comment  Section */}
+        <ShowAllComment
+          refreshComment={refreshComment}
+          groupId={groupInfo._id}
+          isHost={isHost}
+          handleDeleteComment={handleDeleteComment}
+          handleEditComment={handleEditComment}
+          handleReplyComment={handleReplyComment}
+        ></ShowAllComment>
       </div>
     </div>
   );
