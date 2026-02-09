@@ -12,39 +12,48 @@ const Comments = ({ groupId, handleRefreshComments }) => {
   const commenterPhoto = user?.photoURL || altImage;
 
   const handleSendComment = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const comment = e.target.comment.value;
-    const commentTime = new Date().toLocaleString();
+  const comment = e.target.comment.value;
 
-    const commentData = {
-      comment,
-      commenterName,
-      commenterPhoto,
-      commentTime,
-      groupId,
-      
-    };
+  const commentTime = new Date().toLocaleString("en-US", {
+    month: "numeric",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
 
-    fetch(`http://localhost:3000/groups/${groupId}/comments`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(commentData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.insertedId) {
-          showToast("Comment posted successfully");
-          e.target.reset();
-          handleRefreshComments(); 
-        } else {
-          showToast("Failed to post comment", "error");
-        }
-      })
-      .catch(() => {
-        showToast("Server error. Please try again later.", "error");
-      });
+  const commentData = {
+    comment,
+    commenterName,
+    commenterPhoto,
+    commentTime,
+    groupId,
   };
+
+  fetch(`http://localhost:3000/groups/${groupId}/comments`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(commentData),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data?.insertedId) {
+        showToast("Comment posted successfully");
+        e.target.reset();
+        handleRefreshComments();
+      } else {
+        showToast("Failed to post comment", "error");
+      }
+    })
+    .catch(() => {
+      showToast("Server error. Please try again later.", "error");
+    });
+};
+
 
 
 

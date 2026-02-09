@@ -33,16 +33,13 @@ const Login = () => {
         setUser(user);
         navigate(`${location.state ? location.state : "/"}`);
         // setLogged(true);
-
-        console.log(user);
-
         showToast(`Welcome ${user.displayName}`);
       })
       .catch((error) => {
         // setError("Google login failed. Please try again.");
         // setErrorMsg(true);
         // setMsgType(error.message);
-        console.log(error);
+       alert(error);
 
         showToast(
           "Sorry something wrong happened when trying to log in, Please try again!"
@@ -59,7 +56,7 @@ const Login = () => {
         navigate(`${location.state ? location.state : "/"}`);
         // setLogged(true);
 
-        console.log(user);
+       
 
         showToast(`Welcome ${user.displayName}`);
       })
@@ -67,7 +64,7 @@ const Login = () => {
         // setError("Google login failed. Please try again.");
         // setErrorMsg(true);
         // setMsgType(error.message);
-        console.log(error);
+        alert(error);
 
         showToast(
           "Sorry something wrong happened when trying to log in, Please try again!"
@@ -81,7 +78,7 @@ const Login = () => {
     const loginFormData = Object.fromEntries(loginForm.entries());
     const email = loginFormData.email;
     const password = loginFormData.password;
-    console.log(email, password);
+    
     // Invoking signIn firebase function
     signIn(email, password)
       .then((result) => {
@@ -94,7 +91,7 @@ const Login = () => {
         // setError("Google login failed. Please try again.");
         // setErrorMsg(true);
         // setMsgType(error.message);
-        console.log(error);
+        alert(error);
 
         showToast(
           "Sorry something wrong happened when trying to log in, Please try again!"

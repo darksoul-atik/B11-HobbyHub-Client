@@ -17,7 +17,6 @@ const GroupDetails = () => {
   const { showToast } = useContext(ToastContext);
   const { user } = useContext(AuthContext);
   const [refreshComment, setRefreshComment] = useState(false);
-  // const [editStatus, setEditStatus] = useState(false);
   const navigate = useNavigate();
   const timeOver = dateStatus === "Event date has expired";
 
@@ -124,60 +123,123 @@ const GroupDetails = () => {
   const handleRefreshComments = () => {
     setRefreshComment((prev) => !prev);
   };
+  const handleEditComment = (commentId, editedText) => {
+    const groupId = groupInfo._id;
+    const editedAt = new Date().toISOString();
 
-const handleEditComment = (commentId, editedText) => {
-  const groupId = groupInfo._id;
-  const editTime = new Date().toISOString();
-
-  fetch(
-    `http://localhost:3000/groups/${groupId}/comments/${commentId}`,
-    {
+    fetch(`http://localhost:3000/groups/${groupId}/comments/${commentId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         editedCommentText: editedText,
-        editTime,
+        editedAt,
       }),
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      if (data?.modifiedCount) {
-        showToast("Comment edited successfully!");
-        // setEditStatus(true);
-      } else {
-        showToast("No changes were made.", "error");
-      }
     })
-    .catch(() =>
-      showToast("Server error. Please try again later.", "error")
-    );
-};
-
-
-
-
-
-
-
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          showToast("Comment edited successfully!");
+          setRefreshComment((prev) => !prev);
+        } else {
+          showToast("No changes were made.", "error");
+        }
+      })
+      .catch(() => showToast("Server error. Please try again later.", "error"));
+  };
   const handleDeleteComment = (id) => {
-    console.log(id);
+    const groupId = groupInfo._id;
+    fetch(`http://localhost:3000/groups/${groupId}/comments/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.deletedCount) {
+          showToast("Comment deleted successfully!");
+          setRefreshComment((prev) => !prev);
+        } else {
+          showToast("Error while deleting the comment.", "error");
+        }
+      })
+      .catch(() => showToast("Server error. Please try again later.", "error"));
   };
   const handleReplyComment = (id, comment) => {
-    console.log(id, comment);
+    const groupId = groupInfo._id;
+    const repliedText = comment;
+    fetch(`http://localhost:3000/groups/${groupId}/comments/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        repliedText,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          showToast("Comment replied successfully!");
+          setRefreshComment((prev) => !prev);
+        } else {
+          showToast("No replied were made.", "error");
+        }
+      })
+      .catch(() => showToast("Server error. Please try again later.", "error"));
+  };
+
+  //Reply Related
+  const handleEditReply = (commentId, replyText) => {
+    const groupId = groupInfo._id;
+
+    fetch(`http://localhost:3000/groups/${groupId}/comments/${commentId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        repliedText: replyText,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          showToast("Reply edited successfully!");
+          setRefreshComment((prev) => !prev);
+        } else {
+          showToast("Reply was not updated.", "error");
+        }
+      })
+      .catch(() => showToast("Server error. Please try again later.", "error"));
+  };
+  const handleDeleteReply = (commentId) => {
+    const groupId = groupInfo._id;
+
+    fetch(`http://localhost:3000/groups/${groupId}/comments/${commentId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        repliedText: null, // 👈 THIS deletes reply
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.modifiedCount) {
+          showToast("Reply deleted successfully!");
+          setRefreshComment((prev) => !prev);
+        } else {
+          showToast("Reply was not deleted.", "error");
+        }
+      })
+      .catch(() => showToast("Server error. Please try again later.", "error"));
   };
 
   return (
-    <div className="card roboto-regular bg-no-repeat bg-cover bg-center dark:bg-cover dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] pt-10 px-10  shadow-sm">
+    <div className="card roboto-regular bg-no-repeat bg-cover bg-center dark:bg-cover dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] pt-4 sm:pt-6 md:pt-8 lg:pt-10 px-3 sm:px-5 md:px-7 lg:px-10 shadow-sm">
       {/* Back Button */}
       <div className="self-end mb-2">
         <GradientShadowButton
           onClick={() => {
             navigate("/groups");
           }}
-          className="pr-2 rounded-lg text-xs flex items-center justify-center  px-1 py-1 roboto-regular"
+          className="pr-2 rounded-lg text-xs flex items-center justify-center px-1 py-1 roboto-regular"
         >
-          <ChevronsLeft /> Back to Groups
+          <ChevronsLeft className="w-4 h-4" /> <span className="hidden sm:inline">Back to Groups</span><span className="sm:hidden">Back</span>
         </GradientShadowButton>
       </div>
 
@@ -186,34 +248,25 @@ const handleEditComment = (commentId, editedText) => {
         <img
           src={groupInfo.imageUrl}
           alt="groupPhoto"
-          className="
-      w-full
-      max-w-xs
-      sm:max-w-sm
-      md:max-w-md
-      lg:max-w-4xl
-      h-auto
-      rounded-lg
-      object-cover
-    "
+          className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-4xl h-auto rounded-lg object-cover"
         />
       </figure>
 
       {/* Group's Card Body with Infomations */}
-      <div className="card-body ">
+      <div className="card-body px-0 sm:px-4 md:px-6 lg:px-8">
         {/* Group Title and Date*/}
-        <div className="card-title  roboto-bold  flex justify-between">
+        <div className="card-title roboto-bold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-2">
           {/* Right Part  */}
-          <div className="flex items-center gap-2">
-            {groupInfo.groupName}
-            <div className="badge badge-secondary">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
+            <h2 className="text-lg sm:text-xl md:text-2xl break-words">{groupInfo.groupName}</h2>
+            <div className="badge badge-secondary text-xs sm:text-sm whitespace-nowrap">
               Starting Date: {groupInfo.startDate}
             </div>
           </div>
 
           {/* Left Part */}
-          <div className="">
-            <button className="btn btn-outline btn-secondary hover:bg-transparent hover:text-cpink  hover:border-cpink roboto-bold">
+          <div className="w-full sm:w-auto">
+            <button className="btn btn-sm sm:btn-md btn-outline btn-secondary hover:bg-transparent hover:text-cpink hover:border-cpink roboto-bold w-full sm:w-auto text-xs sm:text-sm">
               {dateStatus}
             </button>
           </div>
@@ -222,59 +275,58 @@ const handleEditComment = (commentId, editedText) => {
         <hr />
 
         {/* Host and Group Information */}
-        <div className="flex  ">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-4">
           {/* Left Side */}
-          <div>
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-10">
+          <div className="w-full lg:w-2/3">
+            <div className="flex items-center justify-start gap-2">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0">
                 <img
-                  className="rounded-full w-full"
+                  className="rounded-full w-full h-full object-cover"
                   src={groupInfo.hostPhotoURL || altImage}
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = altImage;
                   }}
+                  alt="Host"
                 />
               </div>
-              <p className="text-xs">
+              <p className="text-xs sm:text-sm">
                 Hosted by <br />
-                <span className="text-cpink text-sm font-extrabold">
+                <span className="text-cpink text-sm sm:text-base font-extrabold">
                   {groupInfo.hostName}
-                </span>{" "}
+                </span>
               </p>
             </div>
 
-            <p className="lg:w-[70%]  mt-5 ">{groupInfo.description}</p>
+            <p className="w-full mt-4 sm:mt-5 text-sm sm:text-base">{groupInfo.description}</p>
           </div>
 
           {/* Right Side */}
-
-          <div className="roboto-regular mt-2">
-            <div className="">
-              <div className="card roboto-regular  w-96 bg-white/10 backdrop-blur-xl border border-white/10 shadow-xl">
-                <div className="card-body">
+          <div className="roboto-regular mt-2 w-full lg:w-1/3">
+            <div className="w-full">
+              <div className="card roboto-regular w-full max-w-full sm:max-w-md lg:max-w-none bg-white/10 backdrop-blur-xl border border-white/10 shadow-xl mx-auto lg:mx-0">
+                <div className="card-body p-4 sm:p-6">
                   {/* Warning Badge */}
-                  <span className="badge badge-sm badge-warning">
+                  <span className="badge badge-sm badge-warning text-xs">
                     Important Notice
                   </span>
 
                   {/* Title + Info */}
                   <div className="flex justify-between items-start">
                     <div>
-                      <h2 className="text-2xl roboto-bold">Before You Join</h2>
+                      <h2 className="text-xl sm:text-2xl roboto-bold">Before You Join</h2>
                       <p className="text-xs opacity-70 mt-1">
-                        Please review the group rules and contact details
-                        carefully.
+                        Please review the group rules and contact details carefully.
                       </p>
                     </div>
                   </div>
 
                   {/* Rules List */}
-                  <ul className="mt-6 flex flex-col gap-3 text-xs">
-                    <li>
+                  <ul className="mt-4 sm:mt-6 flex flex-col gap-2 sm:gap-3 text-xs">
+                    <li className="flex items-start">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="size-4 me-2 inline-block text-success"
+                        className="size-4 me-2 flex-shrink-0 text-success mt-0.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -287,15 +339,14 @@ const handleEditComment = (commentId, editedText) => {
                         />
                       </svg>
                       <span>
-                        Only join if you can attend regularly and follow the
-                        group schedule.
+                        Only join if you can attend regularly and follow the group schedule.
                       </span>
                     </li>
 
-                    <li>
+                    <li className="flex items-start">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="size-4 me-2 inline-block text-success"
+                        className="size-4 me-2 flex-shrink-0 text-success mt-0.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -308,15 +359,14 @@ const handleEditComment = (commentId, editedText) => {
                         />
                       </svg>
                       <span>
-                        Respect all members — harassment or inappropriate
-                        behavior is not allowed.
+                        Respect all members — harassment or inappropriate behavior is not allowed.
                       </span>
                     </li>
 
-                    <li>
+                    <li className="flex items-start">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="size-4 me-2 inline-block text-success"
+                        className="size-4 me-2 flex-shrink-0 text-success mt-0.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -329,15 +379,14 @@ const handleEditComment = (commentId, editedText) => {
                         />
                       </svg>
                       <span>
-                        Meeting locations may change — always confirm before
-                        arriving.
+                        Meeting locations may change — always confirm before arriving.
                       </span>
                     </li>
 
-                    <li className="opacity-70">
+                    <li className="opacity-70 flex items-start">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="size-4 me-2 inline-block text-warning"
+                        className="size-4 me-2 flex-shrink-0 text-warning mt-0.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -350,18 +399,17 @@ const handleEditComment = (commentId, editedText) => {
                         />
                       </svg>
                       <span className="text-red-500 font-semibold">
-                        Never share sensitive personal information in public
-                        group chats.
+                        Never share sensitive personal information in public group chats.
                       </span>
                     </li>
                   </ul>
 
                   {/* Contact Section */}
-                  <div className="mt-6 rounded-xl border border-white/10 bg-black/20 p-4">
+                  <div className="mt-4 sm:mt-6 rounded-xl border border-white/10 bg-black/20 p-3 sm:p-4">
                     <h3 className="text-sm font-semibold mb-2">Host Contact</h3>
 
                     <div className="flex flex-col gap-2 text-xs opacity-90">
-                      <p>
+                      <p className="break-all">
                         📧 <span className="font-semibold">Email:</span>{" "}
                         <span className="underline underline-offset-2">
                           {groupInfo.hostEmail}
@@ -370,22 +418,19 @@ const handleEditComment = (commentId, editedText) => {
 
                       <p>
                         📱 <span className="font-semibold">Phone:</span>{" "}
-                        <span className="">
-                          <span className="ml-2 badge badge-sm bg-cpink text-xs">
-                            For Premium Subscribers only
-                          </span>
+                        <span className="ml-0 sm:ml-2 badge badge-sm bg-cpink text-xs inline-block mt-1 sm:mt-0">
+                          For Premium Subscribers only
                         </span>
                       </p>
 
                       <p className="text-[11px] opacity-70">
-                        Contact the host only for urgent updates, meeting
-                        changes, or support.
+                        Contact the host only for urgent updates, meeting changes, or support.
                       </p>
                     </div>
                   </div>
 
                   {/* Button */}
-                  <div className="mt-6">
+                  <div className="mt-4 sm:mt-6">
                     <GradientShadowButton
                       onClick={() => {
                         handleReport();
@@ -402,20 +447,19 @@ const handleEditComment = (commentId, editedText) => {
         </div>
 
         {/* Join section */}
-        <div className="flex flex-col gap-4 ">
+        <div className="flex flex-col gap-3 sm:gap-4 mt-4">
           <div>
-            <p className="text-bold roboto-bold">Members Joined: </p>
-            <p>
-              {" "}
+            <p className="text-bold roboto-bold text-sm sm:text-base">Members Joined: </p>
+            <p className="text-sm sm:text-base">
               {member.length}/{groupInfo.maxMembers}
             </p>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {!isOverLimit && !joined && !timeOver && (
               <button
                 onClick={() => handleJoin(groupInfo._id)}
-                className="bg-cpink self-start py-1 cursor-pointer rounded-lg px-3"
+                className="bg-cpink self-start py-1.5 sm:py-2 cursor-pointer rounded-lg px-4 sm:px-6 text-sm sm:text-base"
               >
                 Join
               </button>
@@ -425,7 +469,7 @@ const handleEditComment = (commentId, editedText) => {
             {joined && !timeOver && (
               <button
                 disabled
-                className="py-1 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-3"
+                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-base"
               >
                 Already Joined
               </button>
@@ -438,7 +482,7 @@ const handleEditComment = (commentId, editedText) => {
                   handleLimit();
                 }}
                 disabled
-                className="py-1 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-3"
+                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-base"
               >
                 Group Full
               </button>
@@ -448,7 +492,7 @@ const handleEditComment = (commentId, editedText) => {
             {joined && !timeOver && (
               <button
                 onClick={() => handleLeave(groupInfo._id)}
-                className="bg-cpink self-start py-1 cursor-pointer rounded-lg px-3"
+                className="bg-cpink self-start py-1.5 sm:py-2 cursor-pointer rounded-lg px-4 sm:px-6 text-sm sm:text-base"
               >
                 Leave
               </button>
@@ -458,7 +502,7 @@ const handleEditComment = (commentId, editedText) => {
             {timeOver && (
               <button
                 disabled
-                className="py-1 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-3"
+                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-base"
               >
                 Event Expired
               </button>
@@ -467,24 +511,23 @@ const handleEditComment = (commentId, editedText) => {
         </div>
 
         {/* Members of Group Section */}
-
-        <div className="mt-5 roboto-bold">
+        <div className="mt-4 sm:mt-5 roboto-bold">
           <hr className="mb-2" />
-          <p>Joined Members</p>
+          <p className="text-sm sm:text-base">Joined Members</p>
 
-          <div className="mt-4  flex flex-wrap">
+          <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2">
             {member?.map((m, idx) => (
               <a
                 key={m.email || idx}
                 data-tooltip-id="member-tooltip"
                 data-tooltip-content={m?.name || "No Name"}
-                className=" lg:mr-2 animate-in fade-in slide-in-from-left-5 duration-500"
+                className="animate-in fade-in slide-in-from-left-5 duration-500"
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 <img
                   src={m?.photoUrl}
                   alt={m?.name || "Member"}
-                  className="w-10  border-2 border-cpink h-10 rounded-full object-cover transition-transform hover:scale-110 duration-300"
+                  className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-cpink rounded-full object-cover transition-transform hover:scale-110 duration-300"
                 />
               </a>
             ))}
@@ -494,15 +537,15 @@ const handleEditComment = (commentId, editedText) => {
         </div>
 
         {/* Post Comment Section */}
-        <div className="mt-2 roboto-regular flex flex-col gap-1 ">
-          <span className="text-xs roboto-regular text-amber-60 flex items-center gap-2">
-            Commenting as{" "}
-            <span className="font-medium text-cpink">{user.displayName}</span>.
-            Your question will be sent to the host.
+        <div className="mt-4 sm:mt-6 roboto-regular flex flex-col gap-1">
+          <span className="text-xs sm:text-sm roboto-regular text-amber-60 flex flex-wrap items-center gap-2">
+            <span>Commenting as{" "}
+            <span className="font-medium text-cpink">{user.displayName}</span>.</span>
+            <span className="hidden sm:inline">Your question will be sent to the host.</span>
             {/* Disclaimer hover icon (keeps your existing styles) */}
             <span
               data-tooltip-id="comment-guidelines"
-              data-tooltip-content="Please keep comments respectful. Don’t use sexual, explicit, or sensitive language."
+              data-tooltip-content="Please keep comments respectful. Don't use sexual, explicit, or sensitive language."
               className="cursor-pointer inline-flex items-center justify-center"
             >
               <span className="w-4 h-4 bg-red-900 rounded-full border text-[10px] leading-none flex items-center justify-center">
@@ -526,7 +569,9 @@ const handleEditComment = (commentId, editedText) => {
           handleDeleteComment={handleDeleteComment}
           handleEditComment={handleEditComment}
           handleReplyComment={handleReplyComment}
-        ></ShowAllComment>
+          handleEditReply={handleEditReply}
+          handleDeleteReply={handleDeleteReply}
+        />
       </div>
     </div>
   );

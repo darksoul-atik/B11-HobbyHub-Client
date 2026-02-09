@@ -6,17 +6,21 @@ import DarkModeToggle from "../utils/DarkModeToggle";
 import { AuthContext } from "../contexts/AuthContext";
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
+import { ToastContext } from "../contexts/ToastContext";
+
+
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const {showToast} = useContext(ToastContext);
 
   const handleLogout = () => {
     logOut()
       .then((result) => {
-        console.log("log out successfull", result);
+        showToast("log out successfull", result);
       })
       .catch((error) => {
-        console.log("error while logout", error);
+        showToast("error while logout", error);
       });
   };
 

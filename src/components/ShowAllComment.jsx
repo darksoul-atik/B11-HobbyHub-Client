@@ -9,35 +9,24 @@ const ShowAllComment = ({
   handleDeleteComment,
   handleEditComment,
   handleReplyComment,
+  handleEditReply,      
+  handleDeleteReply,   
+  editStatus
 }) => {
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!groupId) return;
-
-    setLoading(true);
 
     fetch(`http://localhost:3000/groups/${groupId}/comments`)
       .then((res) => res.json())
       .then((data) => {
         setComments(Array.isArray(data) ? data : []);
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
       })
       .catch((err) => {
         console.error("Fetch error:", err);
-
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
       });
   }, [groupId, refreshComment]);
-
-  if (loading) {
-    return <FullScreenLoader></FullScreenLoader>;
-  }
 
   if (!comments.length) {
     return <p className="text-xs opacity-60">No comments yet.</p>;
@@ -53,7 +42,10 @@ const ShowAllComment = ({
           handleDeleteComment={handleDeleteComment}
           handleEditComment={handleEditComment}
           handleReplyComment={handleReplyComment}
-        ></CommentCard>
+          handleEditReply={handleEditReply}       
+          handleDeleteReply={handleDeleteReply}   
+          editStatus={editStatus}
+        />
       ))}
     </div>
   );
