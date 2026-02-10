@@ -2,15 +2,11 @@
 
 <div align="center">
   
-  ![HobbyHub Banner](https://i.postimg.cc/g0Ps8yCt/bgauth.png)
-  
   ### 🌟 A Modern Community Platform for Hobby Enthusiasts
   
   **Build communities • Make friends • Explore new hobbies together**
   
-  [![Live Demo](https://img.shields.io/badge/Live-Demo-cpink?style=for-the-badge&logo=vercel)](https://your-live-demo-link.com)
-  [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-181717?style=for-the-badge&logo=github)](https://github.com/yourusername/hobbyhub)
-  [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+  [![Live Demo](https://img.shields.io/badge/🚀-Live_Demo-ff69b4?style=for-the-badge)](https://hobby-hub-ea532.web.app/)
   
 </div>
 
@@ -21,17 +17,17 @@
 - [✨ Features](#-features)
 - [🎯 Key Highlights](#-key-highlights)
 - [🛠️ Tech Stack](#️-tech-stack)
+- [📸 Screenshots](#-screenshots)
 - [🚀 Getting Started](#-getting-started)
 - [📦 Installation](#-installation)
 - [🔧 Configuration](#-configuration)
-- [📸 Screenshots](#-screenshots)
 - [🎨 Color Palette](#-color-palette)
 - [📱 Responsive Design](#-responsive-design)
-- [🔐 Authentication](#-authentication)
+- [🔐 Authentication & Routes](#-authentication--routes)
 - [🌐 API Endpoints](#-api-endpoints)
+- [📁 Project Structure](#-project-structure)
+- [🎯 Features Roadmap](#-features-roadmap)
 - [👥 Contributing](#-contributing)
-- [📄 License](#-license)
-- [📞 Contact](#-contact)
 
 ---
 
@@ -184,12 +180,41 @@
 | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white) | Runtime | Latest |
 | ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white) | Web Framework | 5.1.0 |
 | ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white) | Database | 6.18.0 |
+| ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) | Deployment | - |
 
 </div>
 
 **Backend Dependencies:**
 - **CORS** (2.8.5) - Cross-origin resource sharing
 - **Dotenv** (17.2.4) - Environment variables
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+<div align="center">
+  <img src="https://i.ibb.co/placeholder-home.png" alt="Home Page" width="800"/>
+  <p><em>Beautiful landing page with hero section and featured groups</em></p>
+</div>
+
+### 🎨 Create Group Page
+<div align="center">
+  <img src="https://i.ibb.co/placeholder-create.png" alt="Create Group" width="800"/>
+  <p><em>Intuitive form to create new hobby groups with validation</em></p>
+</div>
+
+### 🔐 Login Page
+<div align="center">
+  <img src="https://i.ibb.co/placeholder-login.png" alt="Login Page" width="800"/>
+  <p><em>Modern authentication with multiple OAuth providers</em></p>
+</div>
+
+### 💬 Group Details & Comments
+<div align="center">
+  <img src="https://i.ibb.co/placeholder-details.png" alt="Group Details" width="800"/>
+  <p><em>Interactive group page with member management and comment system</em></p>
+</div>
 
 ---
 
@@ -246,8 +271,8 @@ VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket_here
 VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id_here
 VITE_FIREBASE_APP_ID=your_app_id_here
 
-# API URL
-VITE_API_URL=http://localhost:3000
+# API URL (use your Vercel deployment URL in production)
+VITE_API_URL=https://your-backend-url.vercel.app
 ```
 
 ### **Backend Setup**
@@ -256,11 +281,11 @@ Create a `.env` file in the `server` directory:
 
 ```env
 # MongoDB Configuration
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/hobbyhubDB?retryWrites=true&w=majority
+DB_USER=your_mongodb_username
+DB_PASS=your_mongodb_password
 
 # Server Configuration
 PORT=3000
-NODE_ENV=development
 ```
 
 ### **Firebase Setup**
@@ -274,9 +299,9 @@ NODE_ENV=development
 
 1. Create account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 2. Create a new cluster
-3. Create database user
-4. Whitelist your IP address
-5. Get connection string and add to `.env`
+3. Create database user with username and password
+4. Whitelist your IP address (or use 0.0.0.0/0 for development)
+5. Get connection string and add credentials to `.env`
 
 ---
 
@@ -288,6 +313,8 @@ NODE_ENV=development
 ```bash
 cd server
 npm start
+# or for development with auto-reload
+npm run dev
 ```
 
 **Terminal 2 - Frontend:**
@@ -300,31 +327,19 @@ Visit: `http://localhost:5173`
 
 ### **Production Build**
 
+**Frontend:**
 ```bash
 cd client
 npm run build
 npm run preview
 ```
 
----
-
-## 📸 Screenshots
-
-<div align="center">
-
-### 🏠 Home Page
-![Home Page](https://via.placeholder.com/800x400?text=Home+Page+Screenshot)
-
-### 🎨 Browse Groups
-![Browse Groups](https://via.placeholder.com/800x400?text=Browse+Groups+Screenshot)
-
-### 💬 Group Details & Comments
-![Group Details](https://via.placeholder.com/800x400?text=Group+Details+Screenshot)
-
-### 📱 Mobile Responsive
-![Mobile View](https://via.placeholder.com/300x600?text=Mobile+View+Screenshot)
-
-</div>
+**Backend:**
+Deploy to Vercel:
+```bash
+cd server
+vercel --prod
+```
 
 ---
 
@@ -359,15 +374,15 @@ npm run preview
 
 ---
 
-## 🔐 Authentication
+## 🔐 Authentication & Routes
 
-### Supported Methods
+### **Supported Authentication Methods**
 
 1. **Email/Password** - Traditional authentication
 2. **Google OAuth** - One-click Google sign-in
 3. **GitHub OAuth** - Developer-friendly authentication
 
-### Application Routes
+### **Application Routes**
 
 #### **Public Routes**
 - `/` - Home page with featured groups
@@ -382,7 +397,7 @@ npm run preview
 - `/updateGroup/:id` - Edit group details (Host only)
 - `/remove/:groupid` - Remove members from group (Host only)
 
-### Route Structure
+### **Route Structure**
 
 ```
 Main Layout (/)
@@ -448,23 +463,38 @@ hobbyhub/
 │   ├── public/               # Static assets
 │   ├── src/
 │   │   ├── components/       # Reusable components
+│   │   │   ├── Comments.jsx
 │   │   │   ├── CommentCard.jsx
 │   │   │   ├── Groups.jsx
+│   │   │   ├── GroupDetails.jsx
+│   │   │   ├── GroupUpdate.jsx
 │   │   │   ├── MyGroup.jsx
 │   │   │   ├── RemoveMember.jsx
 │   │   │   └── Footers.jsx
 │   │   ├── contexts/         # React contexts
-│   │   │   └── AuthContext.jsx
+│   │   │   ├── AuthContext.jsx
+│   │   │   └── ToastContext.jsx
 │   │   ├── pages/            # Page components
+│   │   │   ├── Home.jsx
+│   │   │   ├── AllGroups.jsx
+│   │   │   ├── MyGroups.jsx
+│   │   │   ├── CreateGroups.jsx
+│   │   │   ├── Login.jsx
+│   │   │   └── Register.jsx
 │   │   ├── routes/           # Route configuration
+│   │   │   ├── router.jsx
+│   │   │   └── PrivateRoute.jsx
+│   │   ├── utils/            # Utility components
 │   │   ├── App.jsx           # Main app component
 │   │   └── main.jsx          # Entry point
 │   ├── .env                  # Environment variables
 │   ├── package.json          # Dependencies
+│   ├── tailwind.config.js    # Tailwind configuration
 │   └── vite.config.js        # Vite configuration
 │
 └── server/                    # Backend Node.js app
     ├── index.js              # Server entry point
+    ├── vercel.json           # Vercel configuration
     ├── .env                  # Environment variables
     └── package.json          # Dependencies
 ```
@@ -481,6 +511,7 @@ hobbyhub/
 - [x] Responsive design
 - [x] Dark/Light theme toggle
 - [x] Real-time notifications
+- [x] Deployed on Vercel (Backend) and Firebase (Frontend)
 
 ### 🚧 **In Progress**
 - [ ] Real-time chat within groups
@@ -494,6 +525,8 @@ hobbyhub/
 - [ ] AI-powered hobby recommendations
 - [ ] Gamification and badges
 - [ ] Multi-language support
+- [ ] Push notifications
+- [ ] Advanced search and filters
 
 ---
 
@@ -529,23 +562,14 @@ Found a bug? Please open an issue with:
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-
-
----
-
 ## 🙏 Acknowledgments
 
 - **React Team** for the amazing framework
 - **Tailwind CSS** for the utility-first CSS framework
 - **Firebase** for authentication services
 - **MongoDB** for the flexible database
-- **Framer Motion** for smooth animations
+- **Vercel** for seamless backend deployment
+- **Framer Motion** & **GSAP** for smooth animations
 - All **open-source contributors** who make projects like this possible
 
 ---
@@ -554,6 +578,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ### ⭐ If you found this project helpful, please give it a star!
 
-**Made with ❤️ and ☕ by [Atik Shahrear Ananto]**
+**Made with ❤️ by Atik Shahrear Ananto**
+
+[🌐 Live Demo](https://hobby-hub-ea532.web.app/) • [🐛 Report Bug](https://github.com/yourusername/hobbyhub/issues) • [✨ Request Feature](https://github.com/yourusername/hobbyhub/issues)
 
 </div>
