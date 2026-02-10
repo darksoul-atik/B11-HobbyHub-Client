@@ -10,6 +10,8 @@ import "swiper/css/autoplay";
 import { AuthContext } from "../contexts/AuthContext";
 import { ToastContext } from "../contexts/ToastContext";
 import { useNavigate } from "react-router";
+import { Helmet } from "react-helmet";
+
 
 const CreateGroups = () => {
   // Contexts
@@ -96,6 +98,13 @@ const CreateGroups = () => {
 
   return (
     <div className="hero min-h-screen dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')]  rounded-lg mt-5 mb-5 bg-cblack dark:bg-lblack">
+
+       <Helmet>
+        <title>Create Group</title>
+        <meta name="Create Group" content="Helmet application" />
+      </Helmet>
+     
+
       <div className="hero-content max-sm:py-10 max-sm:px-3 px-10 gap-10 flex-col lg:flex-row-reverse w-full">
         {/* FORM CARD */}
         <div
@@ -358,6 +367,8 @@ const CreateGroups = () => {
           </div>
         </div>
       </div>
+
+
     </div>
   );
 };

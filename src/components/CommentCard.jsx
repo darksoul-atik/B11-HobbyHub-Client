@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Pencil, Trash2, Reply } from "lucide-react";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -19,8 +19,7 @@ const CommentCard = ({
     commenterPhoto,
     commentTime,
     editedAt,
-    reply,
-    repliedAt,
+    replies = [],
   } = comment;
 
   const avatarFallback = "https://i.postimg.cc/mgvBzLt5/user.png";
@@ -34,12 +33,8 @@ const CommentCard = ({
   const [replyText, setReplyText] = useState("");
 
   // Reply edit
-  const [openReplyEdit, setOpenReplyEdit] = useState(false);
-  const [replyEditText, setReplyEditText] = useState(reply || "");
-
-  useEffect(() => {
-    setReplyEditText(reply || "");
-  }, [reply]);
+  const [editingReplyIndex, setEditingReplyIndex] = useState(null);
+  const [replyEditText, setReplyEditText] = useState("");
 
   // Permissions
   const isCommentOwner = commenterName === user?.displayName;
@@ -88,7 +83,7 @@ const CommentCard = ({
                 onClick={() => {
                   setOpenEditInput(true);
                   setOpenReplyInput(false);
-                  setOpenReplyEdit(false);
+                  setEditingReplyIndex(null);
                 }}
                 type="button"
                 className="flex items-center gap-1 px-3 py-1.5 cursor-pointer hover:bg-amber-400/10 hover:text-amber-400 transition"
@@ -119,7 +114,7 @@ const CommentCard = ({
                   onClick={() => {
                     setOpenReplyInput(true);
                     setOpenEditInput(false);
-                    setOpenReplyEdit(false);
+                    setEditingReplyIndex(null);
                   }}
                   type="button"
                   className="flex items-center gap-1 px-3 py-1.5 cursor-pointer hover:bg-white/10 hover:text-white transition"
@@ -172,90 +167,101 @@ const CommentCard = ({
             </div>
           )}
 
-          {/* Reply display */}
-          {reply && (
-            <div className="mt-3 ml-6 p-3 rounded-lg border border-white/10 bg-white/5">
-              {!openReplyEdit ? (
-                <>
-                  <p className="text-[11px] sm:text-xs text-white/80">
-                    <span className="font-semibold text-white/90">
-                      Host replied:
-                    </span>{" "}
-                    <span className="text-cpink font-medium">
-                      @{commenterName}
-                    </span>{" "}
-                    {reply}
-                  </p>
-
-                  {repliedAt && (
-                    <span className="block mt-1 text-[10px] text-white/50">
-                      {repliedAt}
-                    </span>
-                  )}
-
-                  {isHost && (
-                    <div className="mt-2 inline-flex overflow-hidden rounded-md border border-white/10 text-[10px] sm:text-[11px] text-white/70">
-                      <button
-                        onClick={() => {
-                          setOpenReplyEdit(true);
-                          setOpenReplyInput(false);
-                          setOpenEditInput(false);
-                        }}
-                        className="flex items-center gap-1 px-3 py-1.5 cursor-pointer hover:bg-amber-400/10 hover:text-amber-400 transition"
-                      >
-                        <Pencil size={13} />
-                        Edit
-                      </button>
-
-                      <span className="w-px bg-white/10" />
-
-                      <button
-                        onClick={() => handleDeleteReply(comment._id)}
-                        className="flex items-center gap-1 px-3 py-1.5 cursor-pointer hover:bg-red-500/10 hover:text-red-400 transition"
-                      >
-                        <Trash2 size={13} />
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const trimmed = replyEditText.trim();
-                    if (!trimmed) {
-                      showToast("Reply can not be empty!", "error");
-                      return;
-                    }
-                    handleEditReply(comment._id, trimmed);
-                    setOpenReplyEdit(false);
-                  }}
-                  className="flex w-full sm:w-[80%] border rounded-md overflow-hidden"
+          {/* Replies display */}
+          {replies.length > 0 && (
+            <div className="mt-3 ml-6 space-y-2">
+              {replies.map((reply, index) => (
+                <div
+                  key={index}
+                  className="p-3 rounded-lg border border-white/10 bg-white/5"
                 >
-                  <input
-                    className="w-full bg-orange-100 text-black text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 focus:outline-none"
-                    value={replyEditText}
-                    onChange={(e) => setReplyEditText(e.target.value)}
-                    autoFocus
-                  />
+                  {editingReplyIndex !== index ? (
+                    <>
+                      <p className="text-[11px] sm:text-xs text-white/80">
+                        <span className="font-semibold text-white/90">
+                          Host replied:
+                        </span>{" "}
+                        <span className="text-cpink font-medium">
+                          @{commenterName}
+                        </span>{" "}
+                        {reply.text}
+                      </p>
 
-                  <button className="px-2 sm:px-3 bg-white/15 text-white">
-                    Save
-                  </button>
+                      {reply.repliedAt && (
+                        <span className="block mt-1 text-[10px] text-white/50">
+                          {reply.repliedAt}
+                        </span>
+                      )}
 
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setReplyEditText(reply);
-                      setOpenReplyEdit(false);
-                    }}
-                    className="px-2 sm:px-3 bg-transparent text-white/70 border-l border-white/10"
-                  >
-                    Cancel
-                  </button>
-                </form>
-              )}
+                      {isHost && (
+                        <div className="mt-2 inline-flex overflow-hidden rounded-md border border-white/10 text-[10px] sm:text-[11px] text-white/70">
+                          <button
+                            onClick={() => {
+                              setEditingReplyIndex(index);
+                              setReplyEditText(reply.text);
+                              setOpenReplyInput(false);
+                              setOpenEditInput(false);
+                            }}
+                            className="flex items-center gap-1 px-3 py-1.5 cursor-pointer hover:bg-amber-400/10 hover:text-amber-400 transition"
+                          >
+                            <Pencil size={13} />
+                            Edit
+                          </button>
+
+                          <span className="w-px bg-white/10" />
+
+                          <button
+                            onClick={() =>
+                              handleDeleteReply(comment._id, index)
+                            }
+                            className="flex items-center gap-1 px-3 py-1.5 cursor-pointer hover:bg-red-500/10 hover:text-red-400 transition"
+                          >
+                            <Trash2 size={13} />
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        const trimmed = replyEditText.trim();
+                        if (!trimmed) {
+                          showToast("Reply can not be empty!", "error");
+                          return;
+                        }
+                        handleEditReply(comment._id, index, trimmed);
+                        setEditingReplyIndex(null);
+                        setReplyEditText("");
+                      }}
+                      className="flex w-full sm:w-[80%] border rounded-md overflow-hidden"
+                    >
+                      <input
+                        className="w-full bg-orange-100 text-black text-[11px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 focus:outline-none"
+                        value={replyEditText}
+                        onChange={(e) => setReplyEditText(e.target.value)}
+                        autoFocus
+                      />
+
+                      <button className="px-2 sm:px-3 bg-white/15 text-white">
+                        Save
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingReplyIndex(null);
+                          setReplyEditText("");
+                        }}
+                        className="px-2 sm:px-3 bg-transparent text-white/70 border-l border-white/10"
+                      >
+                        Cancel
+                      </button>
+                    </form>
+                  )}
+                </div>
+              ))}
             </div>
           )}
 

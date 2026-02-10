@@ -4,6 +4,7 @@ import MyGroup from "../components/MyGroup";
 import { AuthContext } from "../contexts/AuthContext";
 import AnimatedGradientText from "../utils/AnimatedGradientText";
 import GradientShadowButton from "../utils/GradientShadowButton";
+import { Helmet } from "react-helmet";
 
 const MyGroups = () => {
   const initialGroups = useLoaderData() ?? [];
@@ -31,9 +32,13 @@ const myGroups = updatedGroups.filter((group) => {
     dark:bg-[linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,.45)),url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')]
     rounded-2xl
     border border-white/10
-    shadow-lg
+    shadow-lg m-5
   "
     >
+        <Helmet>
+        <title>My Groups</title>
+        <meta name="My Groups" content="Helmet application" />
+      </Helmet>
       <h2 className="roboto-bold text-center text-base sm:text-lg md:text-xl mb-4 text-white">
         <span className="flex flex-col">
           <span className="text-xs">Groups managed by</span>

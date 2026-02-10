@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -11,6 +11,8 @@ import { FaQuoteRight } from "react-icons/fa";
 import { FaQuoteLeft } from "react-icons/fa";
 import GradientShadowButton from "../utils/GradientShadowButton";
 import { FaUsers, FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router";
+import { ToastContext } from "../contexts/ToastContext";
 
 
 const Hero = () => {
@@ -27,6 +29,8 @@ const Hero = () => {
     ],
     loop: 0,
   });
+  const navigation = useNavigate();
+  const {showToast} = useContext(ToastContext);
   return (
     // Hero Container
     <div
@@ -126,17 +130,21 @@ const Hero = () => {
 
         <div className="md:justify-center lg:justify-start mt-3 md:mt-4 lg:mt-5 flex flex-col md:flex-row flex-wrap items-stretch md:items-center space-y-3 md:space-y-0 md:space-x-4 lg:space-x-5 max-sm:flex max-sm:w-4/6">
 
-          <GradientShadowButton className="rounded-xl w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2 
+          <GradientShadowButton onClick={() => {
+            navigation('/creategroup')
+          }} className="rounded-xl w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2 
           max-sm:text-[10px] max-sm:px-2 
           ">
             <FaUsers className="text-base max-sm:text-lg" />
             Create an Instant Group
           </GradientShadowButton>
 
-          <GradientShadowButton className="rounded-xl w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2
+          <GradientShadowButton onClick={() => {
+            showToast("This feature will coming soon. Thank you")
+          }} className="rounded-xl w-full md:w-auto px-3 py-2 text-sm inline-flex items-center justify-center gap-2
           max-sm:text-[10px] max-sm:px-2">
             <FaSearch className="text-base max-sm:text-base" />
-            Search Ideas!
+            Search Ideas using AI!
           </GradientShadowButton>
         </div>
       </div>

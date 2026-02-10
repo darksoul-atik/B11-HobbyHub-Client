@@ -231,11 +231,10 @@
   --color-cpink: #e34e98;      /* vivid pink */
   --color-ccyan: #2b455e;      /* slate cyan */
   
- 
-  --color-lwhite:  #f7f5f4; /* light surface/background */
-  --color-lpurple: #5f59d6; /* primary tint */
-  --color-lpink:   #f06aa8; /* accent tint */
-  --color-lcyan:   #5b7893; /* slate-cyan tint */
+  --color-lwhite:  #f8fafc;  /* slate white - neutral */
+  --color-lpurple: #7c3aed;  /* violet - deep */
+  --color-lpink:   #fb7185;  /* rose - gentle pop */
+  --color-lcyan:   #94a3b8;  /* slate gray - subtle */
 }
 
 

@@ -10,6 +10,7 @@ import { ChevronsLeft } from "lucide-react";
 import { ToastContext } from "../contexts/ToastContext";
 import Comments from "./Comments";
 import ShowAllComment from "./ShowAllComment";
+import { Helmet } from "react-helmet";
 
 const GroupDetails = () => {
   const groupInfo = useLoaderData();
@@ -230,7 +231,11 @@ const GroupDetails = () => {
   };
 
   return (
-    <div className="card roboto-regular bg-no-repeat bg-cover bg-center dark:bg-cover dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] pt-4 sm:pt-6 md:pt-8 lg:pt-10 px-3 sm:px-5 md:px-7 lg:px-10 shadow-sm">
+    <div className="card mt-5 roboto-regular bg-no-repeat bg-cover bg-center dark:bg-cover dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] pt-4 sm:pt-6 md:pt-8 lg:pt-10 px-3 sm:px-5 md:px-7 lg:px-10 shadow-sm">
+         <Helmet>
+        <title>{groupInfo.groupName}</title>
+        <meta name="Create Group" content="Helmet application" />
+      </Helmet>
       {/* Back Button */}
       <div className="self-end mb-2">
         <GradientShadowButton
@@ -259,7 +264,7 @@ const GroupDetails = () => {
           {/* Right Part  */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
             <h2 className="text-lg sm:text-xl md:text-2xl break-words">{groupInfo.groupName}</h2>
-            <div className="badge badge-secondary text-xs sm:text-sm whitespace-nowrap">
+            <div className="badge badge-secondary  text-xs sm:text-sm whitespace-nowrap">
               Starting Date: {groupInfo.startDate}
             </div>
           </div>
@@ -290,7 +295,7 @@ const GroupDetails = () => {
                   alt="Host"
                 />
               </div>
-              <p className="text-xs sm:text-sm">
+              <p className="text-xs sm:text-xs">
                 Hosted by <br />
                 <span className="text-cpink text-sm sm:text-base font-extrabold">
                   {groupInfo.hostName}
@@ -298,7 +303,7 @@ const GroupDetails = () => {
               </p>
             </div>
 
-            <p className="w-full mt-4 sm:mt-5 text-sm sm:text-base">{groupInfo.description}</p>
+            <p className="w-full mt-4 sm:mt-5 roboto-regular text-xs sm:text-sm">{groupInfo.description}</p>
           </div>
 
           {/* Right Side */}
@@ -449,8 +454,8 @@ const GroupDetails = () => {
         {/* Join section */}
         <div className="flex flex-col gap-3 sm:gap-4 mt-4">
           <div>
-            <p className="text-bold roboto-bold text-sm sm:text-base">Members Joined: </p>
-            <p className="text-sm sm:text-base">
+            <p className="text-bold roboto-bold text-sm sm:text-sm">Members Joined: </p>
+            <p className="text-sm sm:text-sm">
               {member.length}/{groupInfo.maxMembers}
             </p>
           </div>
@@ -459,7 +464,7 @@ const GroupDetails = () => {
             {!isOverLimit && !joined && !timeOver && (
               <button
                 onClick={() => handleJoin(groupInfo._id)}
-                className="bg-cpink self-start py-1.5 sm:py-2 cursor-pointer rounded-lg px-4 sm:px-6 text-sm sm:text-base"
+                className="bg-cpink self-start py-1.5 sm:py-2 cursor-pointer rounded-lg px-4 sm:px-6 text-sm sm:text-sm"
               >
                 Join
               </button>
@@ -469,7 +474,7 @@ const GroupDetails = () => {
             {joined && !timeOver && (
               <button
                 disabled
-                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-base"
+                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-sm"
               >
                 Already Joined
               </button>
@@ -482,7 +487,7 @@ const GroupDetails = () => {
                   handleLimit();
                 }}
                 disabled
-                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-base"
+                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-sm"
               >
                 Group Full
               </button>
@@ -492,7 +497,7 @@ const GroupDetails = () => {
             {joined && !timeOver && (
               <button
                 onClick={() => handleLeave(groupInfo._id)}
-                className="bg-cpink self-start py-1.5 sm:py-2 cursor-pointer rounded-lg px-4 sm:px-6 text-sm sm:text-base"
+                className="bg-cpink self-start py-1.5 sm:py-2 cursor-pointer rounded-lg px-4 sm:px-6 text-sm sm:text-sm"
               >
                 Leave
               </button>
@@ -502,7 +507,7 @@ const GroupDetails = () => {
             {timeOver && (
               <button
                 disabled
-                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-base"
+                className="py-1.5 sm:py-2 bg-gray-600 opacity-80 self-start cursor-not-allowed rounded-lg px-4 sm:px-6 text-sm sm:text-sm"
               >
                 Event Expired
               </button>
@@ -513,7 +518,7 @@ const GroupDetails = () => {
         {/* Members of Group Section */}
         <div className="mt-4 sm:mt-5 roboto-bold">
           <hr className="mb-2" />
-          <p className="text-sm sm:text-base">Joined Members</p>
+          <p className="text-sm sm:text-sm">Joined Members</p>
 
           <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2">
             {member?.map((m, idx) => (
@@ -538,15 +543,15 @@ const GroupDetails = () => {
 
         {/* Post Comment Section */}
         <div className="mt-4 sm:mt-6 roboto-regular flex flex-col gap-1">
-          <span className="text-xs sm:text-sm roboto-regular text-amber-60 flex flex-wrap items-center gap-2">
+          <span className="text-xs sm:text-xs roboto-regular text-amber-60 flex flex-wrap items-center gap-2">
             <span>Commenting as{" "}
             <span className="font-medium text-cpink">{user.displayName}</span>.</span>
             <span className="hidden sm:inline">Your question will be sent to the host.</span>
-            {/* Disclaimer hover icon (keeps your existing styles) */}
+            {/* Disclaimer hover icon  */}
             <span
               data-tooltip-id="comment-guidelines"
               data-tooltip-content="Please keep comments respectful. Don't use sexual, explicit, or sensitive language."
-              className="cursor-pointer inline-flex items-center justify-center"
+              className="cursor-pointer max-sm:text-xs max-sm:text-wrap inline-flex items-center justify-center"
             >
               <span className="w-4 h-4 bg-red-900 rounded-full border text-[10px] leading-none flex items-center justify-center">
                 i

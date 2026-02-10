@@ -12,6 +12,7 @@ import "swiper/css/autoplay";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 import { ToastContext } from "../contexts/ToastContext";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const { googleLogin, setUser, gitHubLogin, signIn } = useContext(AuthContext);
@@ -20,10 +21,10 @@ const Login = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if(location.state){
+    if (location.state) {
       showToast("You must login to access the page");
     }
-  },[location,showToast])
+  }, [location, showToast]);
 
   const handleGoogleLogin = () => {
     googleLogin()
@@ -39,10 +40,10 @@ const Login = () => {
         // setError("Google login failed. Please try again.");
         // setErrorMsg(true);
         // setMsgType(error.message);
-       alert(error);
+        alert(error);
 
         showToast(
-          "Sorry something wrong happened when trying to log in, Please try again!"
+          "Sorry something wrong happened when trying to log in, Please try again!",
         );
       });
   };
@@ -56,8 +57,6 @@ const Login = () => {
         navigate(`${location.state ? location.state : "/"}`);
         // setLogged(true);
 
-       
-
         showToast(`Welcome ${user.displayName}`);
       })
       .catch((error) => {
@@ -67,7 +66,7 @@ const Login = () => {
         alert(error);
 
         showToast(
-          "Sorry something wrong happened when trying to log in, Please try again!"
+          "Sorry something wrong happened when trying to log in, Please try again!",
         );
       });
   };
@@ -78,7 +77,7 @@ const Login = () => {
     const loginFormData = Object.fromEntries(loginForm.entries());
     const email = loginFormData.email;
     const password = loginFormData.password;
-    
+
     // Invoking signIn firebase function
     signIn(email, password)
       .then((result) => {
@@ -94,13 +93,17 @@ const Login = () => {
         alert(error);
 
         showToast(
-          "Sorry something wrong happened when trying to log in, Please try again!"
+          "Sorry something wrong happened when trying to log in, Please try again!",
         );
       });
   };
 
   return (
     <div className=" h-screen roboto-regular w-screen  dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] flex flex-col lg:flex-row items-center justify-center bg-cover bg-center gap-4 p-4">
+      <Helmet>
+        <title>Login</title>
+        <meta name="Login" content="Helmet application" />
+      </Helmet>
       {/* Left Glass Card: Login form */}
       <div className="  w-full md:w-4/6 lg:w-2/6 h-[580px] bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl lg:rounded-tr-none lg:rounded-br-none shadow-2xl flex flex-col items-center justify-center hover:bg-white/5 space-y-6 p-8">
         {/* Header */}
@@ -148,7 +151,9 @@ const Login = () => {
           </div>
 
           {/* Submit */}
-          <GradientShadowButton className=" rounded-xl py-2">Log In</GradientShadowButton>
+          <GradientShadowButton className=" rounded-xl py-2">
+            Log In
+          </GradientShadowButton>
 
           {/* Helpers */}
           <div className="flex items-center justify-between text-xs text-white/80">
@@ -327,7 +332,6 @@ const Login = () => {
             ))}
           </Swiper>
         </div>
-        
       </div>
     </div>
   );

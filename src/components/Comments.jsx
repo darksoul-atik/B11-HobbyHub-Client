@@ -60,17 +60,17 @@ const Comments = ({ groupId, handleRefreshComments }) => {
   return (
     <form
       onSubmit={handleSendComment}
-      className="flex w-[60%] border rounded-md overflow-hidden"
+      className="flex w-[60%] max-sm:w-full max-sm:mt-2  border rounded-md overflow-hidden"
     >
       <input
-        className="lg:px-3 text-black text-xs roboto-regular lg:py-2 bg-yellow-50 w-full focus:outline-none"
+        className="lg:px-3  max-sm:py-1 text-black text-xs roboto-regular lg:py-2 bg-yellow-50 w-full focus:outline-none"
         type="text"
         name="comment"
       />
 
       <GradientShadowButton
         type="submit"
-        className="lg:px-3 text-xs lg:py-2 bg-cpink rounded-none"
+        className="lg:px-3 max-sm:px-1 text-xs lg:py-2 bg-cpink rounded-none"
       >
         Comment
       </GradientShadowButton>

@@ -5,10 +5,15 @@ import Reviews from "../components/reviews";
 import Pricing from "../components/Pricing";
 import AnimatedGradientText from "../utils/AnimatedGradientText";
 import MobileViewReview from "../components/MobileViewReview";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
   return (
     <div>
+        <Helmet>
+        <title>Home</title>
+        <meta name="Create Group" content="Helmet application" />
+      </Helmet>
       {/* Hero Section */}
 
       <section className=" p-10 rounded-lg  ">

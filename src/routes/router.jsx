@@ -9,6 +9,7 @@ import AllGroups from "../pages/AllGroups";
 import MyGroups from "../pages/MyGroups";
 import GroupDetails from "../components/GroupDetails";
 import GroupUpdate from "../components/GroupUpdate";
+import RemoveMember from "../components/RemoveMember";
 
 export const router = createBrowserRouter([
   {
@@ -52,16 +53,25 @@ export const router = createBrowserRouter([
         ),
       },
       {
-         path: "/updateGroup/:id",
+        path: "/updateGroup/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:3000/groups/${params.id}`),
         element: (
           <PrivateRoute>
-           <GroupUpdate></GroupUpdate>
+            <GroupUpdate></GroupUpdate>
           </PrivateRoute>
         ),
       },
-  
+      {
+        path: "/remove/:groupid",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/groups/${params.groupid}`),
+        element: (
+          <PrivateRoute>
+            <RemoveMember></RemoveMember>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 
@@ -73,4 +83,5 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <Register></Register>,
   },
+
 ]);

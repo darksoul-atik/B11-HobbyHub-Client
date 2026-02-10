@@ -12,6 +12,7 @@ import { ToastContext } from "../contexts/ToastContext";
 import { useLoaderData, useNavigate } from "react-router";
 import GroupDetails from "./GroupDetails";
 import { ChevronsLeft } from "lucide-react";
+import { Helmet } from "react-helmet";
 
 const GroupUpdate = () => {
   // Contexts
@@ -68,7 +69,6 @@ const GroupUpdate = () => {
       formDataObject.imageUrl = defaultImageURL;
     }
 
-    
     formDataObject.hostName = displayName;
     formDataObject.hostEmail = email;
     formDataObject.hostPhotoURL = photoURL;
@@ -86,30 +86,31 @@ const GroupUpdate = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.modifiedCount) {
-          showToast(`${formDataObject?.groupName} has been updated successfully`);
+          showToast(
+            `${formDataObject?.groupName} has been updated successfully`,
+          );
           form.reset();
-          navigate('/groups')
-
+          navigate("/groups");
         } else {
-          showToast("Error occurred while updating group, please try again", "error");
+          showToast(
+            "Error occurred while updating group, please try again",
+            "error",
+          );
         }
       })
       .catch(() => {
         showToast("Server error. Please try again later.", "error");
       });
-
- 
-    
   };
 
   return (
     <div className="hero min-h-screen dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')]  rounded-lg mt-5 mb-5 bg-cblack dark:bg-lblack">
-      
+      <Helmet>
+        <title>Group Edit</title>
+        <meta name="Create Group" content="Helmet application" />
+      </Helmet>
+
       <div className="hero-content max-sm:py-10 max-sm:px-3 px-10 gap-10 flex-col lg:flex-row w-full">
-
-      
-
-
         {/* FORM CARD */}
         <div
           className="
@@ -337,26 +338,23 @@ const GroupUpdate = () => {
 
               {/* Create Button */}
               <div className="form-control flex justify-center mt-4">
-                <GradientShadowButton  className="px-5 py-1 rounded-md">
-                 Save
+                <GradientShadowButton className="px-5 py-1 rounded-md">
+                  Save
                 </GradientShadowButton>
               </div>
             </form>
 
-
-
-                {/* Back Button */}
-      <div className="self-center mt-5 mb-2">
-        <GradientShadowButton
-          onClick={() => {
-            navigate(`/groups/${_id}`);
-          }}
-          className="pr-2 rounded-lg text-xs flex items-center justify-center  px-1 py-1 roboto-regular"
-        >
-          <ChevronsLeft /> Back to Group
-        </GradientShadowButton>
-      </div>
-
+            {/* Back Button */}
+            <div className="self-center mt-5 mb-2">
+              <GradientShadowButton
+                onClick={() => {
+                  navigate(`/groups/${_id}`);
+                }}
+                className="pr-2 rounded-lg text-xs flex items-center justify-center  px-1 py-1 roboto-regular"
+              >
+                <ChevronsLeft /> Back to Group
+              </GradientShadowButton>
+            </div>
           </div>
         </div>
       </div>
