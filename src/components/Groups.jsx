@@ -105,11 +105,14 @@ const Groups = ({ group }) => {
                     Starting Date :{" "}
                     <span className="text-cpink">
                       {group.startDate
-                        ? new Date(group.startDate).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })
+                        ? new Date(group.startDate).toLocaleDateString(
+                            "en-US",
+                            {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            },
+                          )
                         : "N/A"}
                     </span>
                   </span>

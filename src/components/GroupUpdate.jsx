@@ -76,7 +76,7 @@ const GroupUpdate = () => {
     formDataObject.userName = displayName;
     formDataObject.userEmail = email;
 
-    fetch(`http://localhost:3000/groups/${_id}`, {
+    fetch(`https://hobby-hub-server-ivory.vercel.app/groups/${_id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

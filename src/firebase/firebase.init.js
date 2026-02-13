@@ -3,13 +3,13 @@ import { initializeApp } from "firebase/app";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC7geKsuULUKS5MkgR9lpyVyTff3gY-QkA",
-  authDomain: "hobby-hub-ea532.firebaseapp.com",
-  projectId: "hobby-hub-ea532",
-  storageBucket: "hobby-hub-ea532.firebasestorage.app",
-  messagingSenderId: "731522859388",
-  appId: "1:731522859388:web:68e8f8a2126175497e64f9",
-  measurementId: "G-FFGEJV5W9C"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

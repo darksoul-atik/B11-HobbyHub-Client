@@ -93,7 +93,7 @@ const MyGroup = ({ group }) => {
       buttonsStyling: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/groups/${id}`, {
+        fetch(`https://hobby-hub-server-ivory.vercel.app/groups/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -150,90 +150,89 @@ const MyGroup = ({ group }) => {
   return (
     <>
       {/* XS (Mobile Card View only) */}
-     <tr className="sm:hidden">
-  <td className="block p-0">
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-md ring-1 ring-white/10">
-      {/* top */}
-      <div className="flex items-start gap-3">
-        <div className="w-20 h-16 overflow-hidden rounded-xl border border-white/10 bg-white/5">
-          <img
-            className="w-full h-full object-cover"
-            src={group?.imageUrl}
-            alt={group?.groupName || "group"}
-            loading="lazy"
-          />
-        </div>
+      <tr className="sm:hidden">
+        <td className="block p-0">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg backdrop-blur-md ring-1 ring-white/10">
+            {/* top */}
+            <div className="flex items-start gap-3">
+              <div className="w-20 h-16 overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                <img
+                  className="w-full h-full object-cover"
+                  src={group?.imageUrl}
+                  alt={group?.groupName || "group"}
+                  loading="lazy"
+                />
+              </div>
 
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-white truncate">
-            {group?.groupName}
-          </p>
-        <p className="mt-1 text-xs text-white/60 break-words whitespace-normal">
-  {group?.meetingLocation}
-</p>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-white truncate">
+                  {group?.groupName}
+                </p>
+                <p className="mt-1 text-xs text-white/60 break-words whitespace-normal">
+                  {group?.meetingLocation}
+                </p>
 
-          <div className="mt-2 inline-flex items-center rounded-full border border-white/10 bg-black/30 px-2 py-1">
-            <span className="text-[11px] text-white/70">
-              {group?.startDate}
-            </span>
-          </div>
-        </div>
-      </div>
+                <div className="mt-2 inline-flex items-center rounded-full border border-white/10 bg-black/30 px-2 py-1">
+                  <span className="text-[11px] text-white/70">
+                    {group?.startDate}
+                  </span>
+                </div>
+              </div>
+            </div>
 
-      {/* host notice */}
-      {!host && (
-        <div className="mt-3 rounded-xl border border-white/10 bg-black/20 p-3">
-          <p className="text-[11px] text-white/60">
-            Only the host can <span className="text-white/80">edit</span>,{" "}
-            <span className="text-white/80">delete</span>, or{" "}
-            <span className="text-white/80">remove members</span>.
-          </p>
-        </div>
-      )}
+            {/* host notice */}
+            {!host && (
+              <div className="mt-3 rounded-xl border border-white/10 bg-black/20 p-3">
+                <p className="text-[11px] text-white/60">
+                  Only the host can <span className="text-white/80">edit</span>,{" "}
+                  <span className="text-white/80">delete</span>, or{" "}
+                  <span className="text-white/80">remove members</span>.
+                </p>
+              </div>
+            )}
 
-      {/* actions */}
-      <div className="mt-4 grid grid-cols-3 gap-2">
-        <Link
-          to={`/updateGroup/${group?._id}`}
-          className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold
+            {/* actions */}
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              <Link
+                to={`/updateGroup/${group?._id}`}
+                className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold
             border border-white/10 bg-white/10 text-white
             hover:bg-white/15 active:scale-[0.98] transition
             ${host ? "" : "pointer-events-none opacity-50"}`}
-          title="Edit group"
-        >
-          <MdEdit size={16} />
-          <span className="hidden xs:inline">Edit</span>
-        </Link>
+                title="Edit group"
+              >
+                <MdEdit size={16} />
+                <span className="hidden xs:inline">Edit</span>
+              </Link>
 
-        <button
-          type="button"
-          onClick={() => handleDelete(group?._id)}
-          className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold
+              <button
+                type="button"
+                onClick={() => handleDelete(group?._id)}
+                className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold
             border border-red-500/20 bg-red-500/15 text-red-100
             hover:bg-red-500/25 hover:text-white active:scale-[0.98] transition
             ${host ? "" : "pointer-events-none opacity-50"}`}
-          title="Delete group"
-        >
-          <MdDelete size={16} />
-          <span className="hidden xs:inline">Delete</span>
-        </button>
+                title="Delete group"
+              >
+                <MdDelete size={16} />
+                <span className="hidden xs:inline">Delete</span>
+              </button>
 
-        <Link
-          to={`/remove/${group?._id}`}
-          className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold
+              <Link
+                to={`/remove/${group?._id}`}
+                className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold
             border border-yellow-500/20 bg-yellow-500/15 text-yellow-100
             hover:bg-yellow-500/25 hover:text-white active:scale-[0.98] transition
             ${host ? "" : "pointer-events-none opacity-50"}`}
-          title="Remove member"
-        >
-          <HiUserRemove size={16} />
-          <span className="hidden xs:inline">Remove</span>
-        </Link>
-      </div>
-    </div>
-  </td>
-</tr>
-
+                title="Remove member"
+              >
+                <HiUserRemove size={16} />
+                <span className="hidden xs:inline">Remove</span>
+              </Link>
+            </div>
+          </div>
+        </td>
+      </tr>
 
       <tr className="hidden roboto-regular sm:table-row align-middle transition-all duration-200 ease-in-out hover:bg-white/5">
         <td className="w-[45%]">
@@ -261,7 +260,7 @@ const MyGroup = ({ group }) => {
         </td>
 
         <td className="w-[25%] text-center text-xs md:text-sm">
-         {memberCount}/{group.maxMembers}
+          {memberCount}/{group.maxMembers}
         </td>
 
         {/* Edit */}

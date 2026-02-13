@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/mygroups",
-        loader: () => fetch("http://localhost:3000/groups"),
+        loader: () => fetch("https://hobby-hub-server-ivory.vercel.app/groups"),
         element: (
           <PrivateRoute>
             <MyGroups></MyGroups>
@@ -39,13 +39,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/groups",
-        loader: () => fetch("http://localhost:3000/groups"),
+        loader: () => fetch("https://hobby-hub-server-ivory.vercel.app/groups"),
         element: <AllGroups></AllGroups>,
       },
       {
         path: "/groups/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/groups/${params.id}`),
+          fetch(
+            `https://hobby-hub-server-ivory.vercel.app/groups/${params.id}`,
+          ),
         element: (
           <PrivateRoute>
             <GroupDetails></GroupDetails>
@@ -55,7 +57,9 @@ export const router = createBrowserRouter([
       {
         path: "/updateGroup/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/groups/${params.id}`),
+          fetch(
+            `https://hobby-hub-server-ivory.vercel.app/groups/${params.id}`,
+          ),
         element: (
           <PrivateRoute>
             <GroupUpdate></GroupUpdate>
@@ -65,7 +69,9 @@ export const router = createBrowserRouter([
       {
         path: "/remove/:groupid",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/groups/${params.groupid}`),
+          fetch(
+            `https://hobby-hub-server-ivory.vercel.app/groups/${params.groupid}`,
+          ),
         element: (
           <PrivateRoute>
             <RemoveMember></RemoveMember>
@@ -83,5 +89,4 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <Register></Register>,
   },
-
 ]);

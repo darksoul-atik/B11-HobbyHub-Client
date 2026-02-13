@@ -12,7 +12,6 @@ import { ToastContext } from "../contexts/ToastContext";
 import { useNavigate } from "react-router";
 import { Helmet } from "react-helmet";
 
-
 const CreateGroups = () => {
   // Contexts
   const auth = useContext(AuthContext); // { user, ... }
@@ -69,7 +68,7 @@ const CreateGroups = () => {
       formDataObject.hostEmail = `Discord User: ${auth?.user?.displayName || "Unknown"}`;
     }
 
-    fetch("http://localhost:3000/groups", {
+    fetch("https://hobby-hub-server-ivory.vercel.app/groups", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,12 +97,10 @@ const CreateGroups = () => {
 
   return (
     <div className="hero min-h-screen dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')]  rounded-lg mt-5 mb-5 bg-cblack dark:bg-lblack">
-
-       <Helmet>
+      <Helmet>
         <title>Create Group</title>
         <meta name="Create Group" content="Helmet application" />
       </Helmet>
-     
 
       <div className="hero-content max-sm:py-10 max-sm:px-3 px-10 gap-10 flex-col lg:flex-row-reverse w-full">
         {/* FORM CARD */}
@@ -367,8 +364,6 @@ const CreateGroups = () => {
           </div>
         </div>
       </div>
-
-
     </div>
   );
 };

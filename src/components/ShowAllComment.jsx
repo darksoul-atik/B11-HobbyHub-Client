@@ -9,16 +9,18 @@ const ShowAllComment = ({
   handleDeleteComment,
   handleEditComment,
   handleReplyComment,
-  handleEditReply,      
-  handleDeleteReply,   
-  editStatus
+  handleEditReply,
+  handleDeleteReply,
+  editStatus,
 }) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     if (!groupId) return;
 
-    fetch(`http://localhost:3000/groups/${groupId}/comments`)
+    fetch(
+      `https://hobby-hub-server-ivory.vercel.app/groups/${groupId}/comments`,
+    )
       .then((res) => res.json())
       .then((data) => {
         setComments(Array.isArray(data) ? data : []);
@@ -42,8 +44,8 @@ const ShowAllComment = ({
           handleDeleteComment={handleDeleteComment}
           handleEditComment={handleEditComment}
           handleReplyComment={handleReplyComment}
-          handleEditReply={handleEditReply}       
-          handleDeleteReply={handleDeleteReply}   
+          handleEditReply={handleEditReply}
+          handleDeleteReply={handleDeleteReply}
           editStatus={editStatus}
         />
       ))}

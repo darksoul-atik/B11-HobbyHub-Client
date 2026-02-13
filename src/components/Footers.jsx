@@ -112,8 +112,8 @@ const Footers = () => {
                 2. Keep It Relevant
               </h4>
               <p className="text-xs text-white/70 roboto-regular">
-                Share content that's relevant to your group's hobby or
-                interest. Spam and off-topic posts may be removed.
+                Share content that's relevant to your group's hobby or interest.
+                Spam and off-topic posts may be removed.
               </p>
             </div>
             <div>
@@ -440,7 +440,7 @@ const Footers = () => {
                     className="text-xs sm:text-sm text-white/70 hover:text-cpink dark:hover:text-lpurple
                     roboto-regular transition-colors duration-200"
                   >
-                   anantoshahrear10@gmail.com
+                    anantoshahrear10@gmail.com
                   </a>
                 </div>
                 <div className="flex items-start gap-3">
@@ -472,10 +472,10 @@ const Footers = () => {
                     focus:outline-none focus:border-cpink dark:focus:border-lpurple
                     transition-colors"
                   />
-                  <button onClick={() => {
-                    alert("এই ফিচার পরে আনবো! :)");
-                  }}
-                  
+                  <button
+                    onClick={() => {
+                      alert("এই ফিচার পরে আনবো! :)");
+                    }}
                     className="px-4 py-2 cursor-pointer rounded-lg
                     bg-cpink dark:bg-lpurple
                     hover:bg-cpink/80 dark:hover:bg-lpurple/80

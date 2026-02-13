@@ -11,17 +11,16 @@ const MyGroups = () => {
   const [updatedGroups, setUpdatedGroups] = useState(initialGroups);
   const { user } = useContext(AuthContext);
 
-const isGitHubUser = user?.providerData?.some(
-  (p) => p?.providerId === "github.com"
-);
+  const isGitHubUser = user?.providerData?.some(
+    (p) => p?.providerId === "github.com",
+  );
 
-const myGroups = updatedGroups.filter((group) => {
-  if (isGitHubUser) {
-    return group.hostUid === user?.uid;    
-  }
-  return group.hostEmail === user?.email;  
-});
-  
+  const myGroups = updatedGroups.filter((group) => {
+    if (isGitHubUser) {
+      return group.hostUid === user?.uid;
+    }
+    return group.hostEmail === user?.email;
+  });
 
   return (
     <div
@@ -35,7 +34,7 @@ const myGroups = updatedGroups.filter((group) => {
     shadow-lg m-5
   "
     >
-        <Helmet>
+      <Helmet>
         <title>My Groups</title>
         <meta name="My Groups" content="Helmet application" />
       </Helmet>
@@ -53,7 +52,11 @@ const myGroups = updatedGroups.filter((group) => {
       <div className="overflow-x-auto">
         <table className="table table-fixed w-full">
           {/* Hide table head on xs (mobile) */}
-          <thead className={myGroups?.length ? `hidden sm:table-header-group` : "hidden"}>
+          <thead
+            className={
+              myGroups?.length ? `hidden sm:table-header-group` : "hidden"
+            }
+          >
             <tr className="text-xs md:text-sm">
               <th className="w-[45%] roboto-bold">Group Name</th>
               <th className="w-[25%] text-center roboto-bold">
@@ -77,9 +80,12 @@ const myGroups = updatedGroups.filter((group) => {
               <tr className="roboto-regular">
                 <td colSpan={100} className="py-6 h-100 text-center w-full">
                   <div>
-
-                  <h2 className="text-lg roboto-regular">Your groups will appear here</h2>
-                  <GradientShadowButton className="text-xs px-2 py-1 rounded mt-10 text-white "><Link to={'/creategroup'}>Create your first group</Link></GradientShadowButton>
+                    <h2 className="text-lg roboto-regular">
+                      Your groups will appear here
+                    </h2>
+                    <GradientShadowButton className="text-xs px-2 py-1 rounded mt-10 text-white ">
+                      <Link to={"/creategroup"}>Create your first group</Link>
+                    </GradientShadowButton>
                   </div>
                 </td>
               </tr>

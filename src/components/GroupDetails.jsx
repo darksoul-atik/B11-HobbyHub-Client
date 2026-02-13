@@ -69,7 +69,7 @@ const GroupDetails = () => {
     const updatedMembers = [...member, newMember];
     setMember(updatedMembers);
 
-    fetch(`http://localhost:3000/groups/${id}`, {
+    fetch(`https://hobby-hub-server-ivory.vercel.app/groups/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedMembers),
@@ -98,7 +98,7 @@ const GroupDetails = () => {
     const updatedMembers = member.filter((m) => m.email !== email);
     setMember(updatedMembers);
 
-    fetch(`http://localhost:3000/groups/${id}`, {
+    fetch(`https://hobby-hub-server-ivory.vercel.app/groups/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedMembers),
@@ -128,14 +128,17 @@ const GroupDetails = () => {
     const groupId = groupInfo._id;
     const editedAt = new Date().toISOString();
 
-    fetch(`http://localhost:3000/groups/${groupId}/comments/${commentId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        editedCommentText: editedText,
-        editedAt,
-      }),
-    })
+    fetch(
+      `https://hobby-hub-server-ivory.vercel.app/groups/${groupId}/comments/${commentId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          editedCommentText: editedText,
+          editedAt,
+        }),
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data?.modifiedCount) {
@@ -149,10 +152,13 @@ const GroupDetails = () => {
   };
   const handleDeleteComment = (id) => {
     const groupId = groupInfo._id;
-    fetch(`http://localhost:3000/groups/${groupId}/comments/${id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      `https://hobby-hub-server-ivory.vercel.app/groups/${groupId}/comments/${id}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data?.deletedCount) {
@@ -167,13 +173,16 @@ const GroupDetails = () => {
   const handleReplyComment = (id, comment) => {
     const groupId = groupInfo._id;
     const repliedText = comment;
-    fetch(`http://localhost:3000/groups/${groupId}/comments/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        repliedText,
-      }),
-    })
+    fetch(
+      `https://hobby-hub-server-ivory.vercel.app/groups/${groupId}/comments/${id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          repliedText,
+        }),
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data?.modifiedCount) {
@@ -190,13 +199,16 @@ const GroupDetails = () => {
   const handleEditReply = (commentId, replyText) => {
     const groupId = groupInfo._id;
 
-    fetch(`http://localhost:3000/groups/${groupId}/comments/${commentId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        repliedText: replyText,
-      }),
-    })
+    fetch(
+      `https://hobby-hub-server-ivory.vercel.app/groups/${groupId}/comments/${commentId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          repliedText: replyText,
+        }),
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data?.modifiedCount) {
@@ -211,13 +223,16 @@ const GroupDetails = () => {
   const handleDeleteReply = (commentId) => {
     const groupId = groupInfo._id;
 
-    fetch(`http://localhost:3000/groups/${groupId}/comments/${commentId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        repliedText: null, // 👈 THIS deletes reply
-      }),
-    })
+    fetch(
+      `https://hobby-hub-server-ivory.vercel.app/groups/${groupId}/comments/${commentId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          repliedText: null, // 👈 THIS deletes reply
+        }),
+      },
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data?.modifiedCount) {
@@ -232,7 +247,7 @@ const GroupDetails = () => {
 
   return (
     <div className="card mt-5 roboto-regular bg-no-repeat bg-cover bg-center dark:bg-cover dark:bg-[url('https://i.postimg.cc/g0Ps8yCt/bgauth.png')] bg-[url('https://i.postimg.cc/d3sJWt3P/Purple-and-Black-Modern-Login-and-Sign-up-Website-Page-UI-Desktop-Prototype.png')] pt-4 sm:pt-6 md:pt-8 lg:pt-10 px-3 sm:px-5 md:px-7 lg:px-10 shadow-sm">
-         <Helmet>
+      <Helmet>
         <title>{groupInfo.groupName}</title>
         <meta name="Create Group" content="Helmet application" />
       </Helmet>
@@ -244,7 +259,9 @@ const GroupDetails = () => {
           }}
           className="pr-2 rounded-lg text-xs flex items-center justify-center px-1 py-1 roboto-regular"
         >
-          <ChevronsLeft className="w-4 h-4" /> <span className="hidden sm:inline">Back to Groups</span><span className="sm:hidden">Back</span>
+          <ChevronsLeft className="w-4 h-4" />{" "}
+          <span className="hidden sm:inline">Back to Groups</span>
+          <span className="sm:hidden">Back</span>
         </GradientShadowButton>
       </div>
 
@@ -263,7 +280,9 @@ const GroupDetails = () => {
         <div className="card-title roboto-bold flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-2">
           {/* Right Part  */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
-            <h2 className="text-lg sm:text-xl md:text-2xl break-words">{groupInfo.groupName}</h2>
+            <h2 className="text-lg sm:text-xl md:text-2xl break-words">
+              {groupInfo.groupName}
+            </h2>
             <div className="badge badge-secondary  text-xs sm:text-sm whitespace-nowrap">
               Starting Date: {groupInfo.startDate}
             </div>
@@ -303,7 +322,9 @@ const GroupDetails = () => {
               </p>
             </div>
 
-            <p className="w-full mt-4 sm:mt-5 roboto-regular text-xs sm:text-sm">{groupInfo.description}</p>
+            <p className="w-full mt-4 sm:mt-5 roboto-regular text-xs sm:text-sm">
+              {groupInfo.description}
+            </p>
           </div>
 
           {/* Right Side */}
@@ -319,9 +340,12 @@ const GroupDetails = () => {
                   {/* Title + Info */}
                   <div className="flex justify-between items-start">
                     <div>
-                      <h2 className="text-xl sm:text-2xl roboto-bold">Before You Join</h2>
+                      <h2 className="text-xl sm:text-2xl roboto-bold">
+                        Before You Join
+                      </h2>
                       <p className="text-xs opacity-70 mt-1">
-                        Please review the group rules and contact details carefully.
+                        Please review the group rules and contact details
+                        carefully.
                       </p>
                     </div>
                   </div>
@@ -344,7 +368,8 @@ const GroupDetails = () => {
                         />
                       </svg>
                       <span>
-                        Only join if you can attend regularly and follow the group schedule.
+                        Only join if you can attend regularly and follow the
+                        group schedule.
                       </span>
                     </li>
 
@@ -364,7 +389,8 @@ const GroupDetails = () => {
                         />
                       </svg>
                       <span>
-                        Respect all members — harassment or inappropriate behavior is not allowed.
+                        Respect all members — harassment or inappropriate
+                        behavior is not allowed.
                       </span>
                     </li>
 
@@ -384,7 +410,8 @@ const GroupDetails = () => {
                         />
                       </svg>
                       <span>
-                        Meeting locations may change — always confirm before arriving.
+                        Meeting locations may change — always confirm before
+                        arriving.
                       </span>
                     </li>
 
@@ -404,7 +431,8 @@ const GroupDetails = () => {
                         />
                       </svg>
                       <span className="text-red-500 font-semibold">
-                        Never share sensitive personal information in public group chats.
+                        Never share sensitive personal information in public
+                        group chats.
                       </span>
                     </li>
                   </ul>
@@ -429,7 +457,8 @@ const GroupDetails = () => {
                       </p>
 
                       <p className="text-[11px] opacity-70">
-                        Contact the host only for urgent updates, meeting changes, or support.
+                        Contact the host only for urgent updates, meeting
+                        changes, or support.
                       </p>
                     </div>
                   </div>
@@ -454,7 +483,9 @@ const GroupDetails = () => {
         {/* Join section */}
         <div className="flex flex-col gap-3 sm:gap-4 mt-4">
           <div>
-            <p className="text-bold roboto-bold text-sm sm:text-sm">Members Joined: </p>
+            <p className="text-bold roboto-bold text-sm sm:text-sm">
+              Members Joined:{" "}
+            </p>
             <p className="text-sm sm:text-sm">
               {member.length}/{groupInfo.maxMembers}
             </p>
@@ -544,9 +575,14 @@ const GroupDetails = () => {
         {/* Post Comment Section */}
         <div className="mt-4 sm:mt-6 roboto-regular flex flex-col gap-1">
           <span className="text-xs sm:text-xs roboto-regular text-amber-60 flex flex-wrap items-center gap-2">
-            <span>Commenting as{" "}
-            <span className="font-medium text-cpink">{user.displayName}</span>.</span>
-            <span className="hidden sm:inline">Your question will be sent to the host.</span>
+            <span>
+              Commenting as{" "}
+              <span className="font-medium text-cpink">{user.displayName}</span>
+              .
+            </span>
+            <span className="hidden sm:inline">
+              Your question will be sent to the host.
+            </span>
             {/* Disclaimer hover icon  */}
             <span
               data-tooltip-id="comment-guidelines"

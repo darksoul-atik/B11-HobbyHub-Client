@@ -8,11 +8,9 @@ import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import { ToastContext } from "../contexts/ToastContext";
 
-
-
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const {showToast} = useContext(ToastContext);
+  const { showToast } = useContext(ToastContext);
 
   const handleLogout = () => {
     logOut()

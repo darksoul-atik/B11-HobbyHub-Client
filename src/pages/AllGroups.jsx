@@ -32,7 +32,6 @@ const AllGroups = () => {
 
       {/* Pagination */}
       <div className="flex justify-center items-center gap-2 mt-8 mb-5">
-        
         {/* Prev Button */}
         <GradientShadowButton
           onClick={() => {
@@ -44,8 +43,6 @@ const AllGroups = () => {
         >
           Prev
         </GradientShadowButton>
-
-
 
         {/* Page Numbers */}
         {[...Array(totalPages).keys()].map((num) => (
@@ -74,8 +71,6 @@ const AllGroups = () => {
         >
           Next
         </GradientShadowButton>
-
-        
       </div>
     </div>
   );

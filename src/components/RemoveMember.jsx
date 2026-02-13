@@ -82,13 +82,16 @@ const RemoveMember = () => {
           (member) => member.email !== memberEmail,
         );
 
-        fetch(`http://localhost:3000/groups/${groupInfo._id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
+        fetch(
+          `https://hobby-hub-server-ivory.vercel.app/groups/${groupInfo._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedMembers),
           },
-          body: JSON.stringify(updatedMembers),
-        })
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.modifiedCount) {

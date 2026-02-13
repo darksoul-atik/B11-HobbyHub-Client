@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet";
 const Home = () => {
   return (
     <div>
-        <Helmet>
+      <Helmet>
         <title>Home</title>
         <meta name="Create Group" content="Helmet application" />
       </Helmet>
