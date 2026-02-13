@@ -229,7 +229,7 @@ const GroupDetails = () => {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          repliedText: null, // 👈 THIS deletes reply
+          repliedText: null, // this deletes reply (not optimized way but works)
         }),
       },
     )
