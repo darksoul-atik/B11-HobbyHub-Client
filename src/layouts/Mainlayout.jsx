@@ -1,5 +1,5 @@
 import React, { useContext, Suspense } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigation } from "react-router";
 import Headers from "../components/Headers";
 import Footers from "../components/Footers";
 import "../App.css";
@@ -9,6 +9,7 @@ import FullScreenLoader from "../utils/FullScreenLoader";
 
 const Mainlayout = () => {
   const { loading } = useContext(AuthContext);
+  const navigation = useNavigation();
 
   if (loading) return <FullScreenLoader />;
 
@@ -19,7 +20,7 @@ const Mainlayout = () => {
       <div className="min-h-[calc(100vh-116px)] overflow-auto">
         <div className="max-w-screen-5xl mx-auto px-8 md:px-12 lg:px-16 xl:px-24">
           <Suspense fallback={<FullScreenLoader />}>
-            <Outlet />
+            {navigation.state === "loading" ? <FullScreenLoader /> : <Outlet />}
           </Suspense>
         </div>
       </div>
