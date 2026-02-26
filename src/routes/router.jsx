@@ -10,6 +10,7 @@ import MyGroups from "../pages/MyGroups";
 import GroupDetails from "../components/GroupDetails";
 import GroupUpdate from "../components/GroupUpdate";
 import RemoveMember from "../components/RemoveMember";
+import FullScreenLoader from "../components/FullScreenLoader";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
       {
         path: "/mygroups",
         loader: () => fetch("https://hobby-hub-server-ivory.vercel.app/groups"),
+        hydrateFallbackElement: <FullScreenLoader />,
         element: (
           <PrivateRoute>
             <MyGroups></MyGroups>
@@ -40,6 +42,7 @@ export const router = createBrowserRouter([
       {
         path: "/groups",
         loader: () => fetch("https://hobby-hub-server-ivory.vercel.app/groups"),
+        hydrateFallbackElement: <FullScreenLoader />,
         element: <AllGroups></AllGroups>,
       },
       {
@@ -48,6 +51,7 @@ export const router = createBrowserRouter([
           fetch(
             `https://hobby-hub-server-ivory.vercel.app/groups/${params.id}`,
           ),
+        hydrateFallbackElement: <FullScreenLoader />,
         element: (
           <PrivateRoute>
             <GroupDetails></GroupDetails>
@@ -60,6 +64,7 @@ export const router = createBrowserRouter([
           fetch(
             `https://hobby-hub-server-ivory.vercel.app/groups/${params.id}`,
           ),
+        hydrateFallbackElement: <FullScreenLoader />,
         element: (
           <PrivateRoute>
             <GroupUpdate></GroupUpdate>
@@ -72,6 +77,7 @@ export const router = createBrowserRouter([
           fetch(
             `https://hobby-hub-server-ivory.vercel.app/groups/${params.groupid}`,
           ),
+        hydrateFallbackElement: <FullScreenLoader />,
         element: (
           <PrivateRoute>
             <RemoveMember></RemoveMember>
