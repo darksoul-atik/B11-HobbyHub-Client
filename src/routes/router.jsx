@@ -10,7 +10,8 @@ import MyGroups from "../pages/MyGroups";
 import GroupDetails from "../components/GroupDetails";
 import GroupUpdate from "../components/GroupUpdate";
 import RemoveMember from "../components/RemoveMember";
-import FullScreenLoader from "../components/FullScreenLoader";
+import FullScreenLoader from "../utils/FullScreenLoader";
+
 
 export const router = createBrowserRouter([
   {
